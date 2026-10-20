@@ -1,0 +1,22 @@
+name: about
+description: About page module for Ditonton app.
+version: 1.0.0
+publish_to: 'none'
+
+environment:
+  sdk: ^3.13.4
+
+dependencies:
+  flutter:
+    sdk: flutter
+  core:
+    path: ../core
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/circle-g.png

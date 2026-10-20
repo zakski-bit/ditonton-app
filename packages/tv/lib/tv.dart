@@ -1,0 +1,53 @@
+library tv;
+
+// Data sources
+export 'data/datasources/tv_local_data_source.dart';
+export 'data/datasources/tv_remote_data_source.dart';
+
+// Models
+export 'data/models/tv_series_detail_model.dart';
+export 'data/models/tv_series_model.dart';
+export 'data/models/tv_series_response.dart';
+
+// Repositories
+export 'data/repositories/tv_repository_impl.dart';
+export 'domain/repositories/tv_repository.dart';
+
+// Use cases
+export 'domain/usecases/get_on_the_air_tv_series.dart';
+export 'domain/usecases/get_popular_tv_series.dart';
+export 'domain/usecases/get_top_rated_tv_series.dart';
+export 'domain/usecases/get_tv_series_detail.dart';
+export 'domain/usecases/get_tv_series_recommendations.dart';
+export 'domain/usecases/get_watchlist_tv_series.dart';
+export 'domain/usecases/get_watchlist_status_tv.dart';
+export 'domain/usecases/save_watchlist_tv.dart';
+export 'domain/usecases/remove_watchlist_tv.dart';
+
+// Presentation - BLoC
+export 'presentation/bloc/detail/tv_series_detail_bloc.dart';
+export 'presentation/bloc/detail/tv_series_detail_event.dart';
+export 'presentation/bloc/detail/tv_series_detail_state.dart';
+export 'presentation/bloc/on_the_air/on_the_air_tv_series_bloc.dart';
+export 'presentation/bloc/on_the_air/on_the_air_tv_series_event.dart';
+export 'presentation/bloc/on_the_air/on_the_air_tv_series_state.dart';
+export 'presentation/bloc/popular/popular_tv_series_bloc.dart';
+export 'presentation/bloc/popular/popular_tv_series_event.dart';
+export 'presentation/bloc/popular/popular_tv_series_state.dart';
+export 'presentation/bloc/recommendations/tv_series_recommendations_bloc.dart';
+export 'presentation/bloc/recommendations/tv_series_recommendations_event.dart';
+export 'presentation/bloc/recommendations/tv_series_recommendations_state.dart';
+export 'presentation/bloc/top_rated/top_rated_tv_series_bloc.dart';
+export 'presentation/bloc/top_rated/top_rated_tv_series_event.dart';
+export 'presentation/bloc/top_rated/top_rated_tv_series_state.dart';
+export 'presentation/bloc/watchlist/watchlist_tv_series_bloc.dart';
+export 'presentation/bloc/watchlist/watchlist_tv_series_event.dart';
+export 'presentation/bloc/watchlist/watchlist_tv_series_state.dart';
+
+// Presentation - Pages & Widgets
+export 'presentation/pages/home_tv_series_page.dart';
+export 'presentation/pages/on_the_air_tv_series_page.dart';
+export 'presentation/pages/popular_tv_series_page.dart';
+export 'presentation/pages/top_rated_tv_series_page.dart';
+export 'presentation/pages/tv_series_detail_page.dart';
+export 'presentation/widgets/tv_series_card_list.dart';

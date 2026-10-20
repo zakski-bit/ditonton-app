@@ -1,97 +1,62 @@
 #!/usr/bin/env bash
 
-# https://medium.com/@nocnoc/combined-code-coverage-for-flutter-and-dart-237b9563ecf8
-
-# remember some failed commands and report on exit
+# Combined code coverage and test runner for Ditonton modular architecture
 error=false
 
 show_help() {
-  printf "usage: $0 [--help]
-Tool for running all unit and widget tests with code coverage and automatically generated if lcov is installed.
-
-(run from root of repo)
-where:
-    --help
-        print this message
-"
+  printf "usage: $0 [--help]\nTool for running all unit and widget tests with code coverage across modular packages.\n"
   exit 1
 }
 
-# run unit and widget tests
 runTests() {
-  cd $1
-  if [ -f "pubspec.yaml" ] && [ -d "test" ]; then
-    echo "running tests in $1"
+  pkg=$1
+  root_dir=$2
+  if [ -d "$pkg" ] && [ -f "$pkg/pubspec.yaml" ] && [ -d "$pkg/test" ]; then
+    echo "=========================================="
+    echo "Running tests in $pkg"
+    echo "=========================================="
+    cd "$pkg" || exit
     flutter pub get
+    flutter test --coverage || error=true
 
-    escapedPath="$(echo $1 | sed 's/\//\\\//g')"
-
-    # run tests with coverage
-    if grep flutter pubspec.yaml >/dev/null; then
-      echo "run flutter tests"
-      if [ -f "test/all_tests.dart" ]; then
-        flutter test --coverage test/all_tests.dart || error=true
-      else
-        flutter test --coverage || error=true
-      fi
-
-      if [ -d "coverage" ]; then
-        # combine line coverage info from package tests to a common file
-        sed "s/^SF:lib/SF:$escapedPath\/lib/g" coverage/lcov.info >>$2/coverage/test.info
-        rm -f coverage/lcov.info
-      fi
-    else
-      echo "not a flutter package, skipping"
+    if [ -f "coverage/lcov.info" ]; then
+      mkdir -p "$root_dir/coverage"
+      escaped_path=$(echo "$pkg" | sed 's/\//\\\//g')
+      sed "s/^SF:lib/SF:$escaped_path\/lib/g" coverage/lcov.info >> "$root_dir/coverage/lcov.info"
     fi
-  fi
-  cd - >/dev/null
-}
-
-runReport() {
-  if [ -f "coverage/test.info" ] && ! [ "$TRAVIS" ]; then
-    genhtml coverage/test.info -o coverage --no-function-coverage --prefix $(pwd)
-
-    if [ "$(uname)" == "Darwin" ]; then
-      open coverage/index.html
-    else
-      start coverage/index.html
-    fi
+    cd "$root_dir" || exit
   fi
 }
 
-if ! [ -f "pubspec.yaml" ] && [ -d .git ]; then
-  printf "\nError: not in root of repo\n"
-  show_help
+ROOT_DIR=$(pwd)
+
+if [ -d "coverage" ]; then
+  rm -rf coverage
 fi
 
-case $1 in
---help)
-  show_help
-  ;;
-*)
-  currentDir=$(pwd)
-  # if no parameter passed
-  if [ -z $1 ]; then
-    if [ -d "coverage" ]; then
-      rm -r coverage
-    fi
-    dirs=($(find . -maxdepth 2 -type d))
-    for dir in "${dirs[@]}"; do
-      runTests $dir $currentDir
-    done
-  else
-    if [[ -d "$1" ]]; then
-      runTests $1 $currentDir
-    else
-      printf "\nError: not a directory: $1"
-      show_help
-    fi
-  fi
-  runReport
-  ;;
-esac
+PACKAGES=(
+  "packages/core"
+  "packages/about"
+  "packages/movie"
+  "packages/tv"
+  "packages/search"
+  "packages/watchlist"
+  "."
+)
 
-# Fail the build if there was an error
+for pkg in "${PACKAGES[@]}"; do
+  runTests "$pkg" "$ROOT_DIR"
+done
+
+if [ -f "coverage/lcov.info" ] && command -v genhtml &> /dev/null; then
+  echo "Generating HTML coverage report..."
+  genhtml coverage/lcov.info -o coverage/html
+fi
+
 if [ "$error" = true ]; then
-  exit -1
+  echo "Some tests failed!"
+  exit 1
+else
+  echo "All modular tests passed successfully!"
+  exit 0
 fi

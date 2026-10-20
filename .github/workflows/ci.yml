@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test_and_analyze:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Verify Flutter Version
+        run: flutter --version
+
+      - name: Install Dependencies
+        run: |
+          for pkg in packages/core packages/about packages/movie packages/tv packages/search packages/watchlist .; do
+            echo "Installing dependencies in $pkg"
+            (cd $pkg && flutter pub get)
+          done
+
+      - name: Run Linter (flutter analyze)
+        run: |
+          for pkg in packages/core packages/about packages/movie packages/tv packages/search packages/watchlist .; do
+            echo "Analyzing $pkg"
+            (cd $pkg && flutter analyze)
+          done
+
+      - name: Run Unit & Widget Tests with Coverage
+        run: |
+          for pkg in packages/core packages/about packages/movie packages/tv packages/search packages/watchlist .; do
+            echo "Testing $pkg"
+            (cd $pkg && flutter test --coverage)
+          done
