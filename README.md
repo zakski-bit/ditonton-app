@@ -1,5 +1,7 @@
 # Ditonton - Movie & TV Series Catalogue App
 
+[![CI](https://github.com/zakski-bit/ditonton-app/actions/workflows/ci.yml/badge.svg)](https://github.com/zakski-bit/ditonton-app/actions/workflows/ci.yml)
+
 **Ditonton** adalah aplikasi katalog film dan serial TV yang mengadopsi standar rekayasa perangkat lunak tingkat *enterprise*: **Clean Architecture**, **Multi-Package Modularization**, **BLoC Pattern State Management**, **SSL Pinning**, **Firebase Analytics & Crashlytics**, serta **Continuous Integration (CI/CD)**.
 
 Proyek ini dibangun sebagai submission akhir pada kelas **Menjadi Flutter Developer Expert** di Dicoding Academy dengan target capaian **Bintang 5**.
