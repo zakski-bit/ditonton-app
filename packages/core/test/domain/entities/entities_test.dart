@@ -92,7 +92,7 @@ void main() {
           posterPath: '/path.jpg',
           seasonNumber: 1,
           episodeCount: 10,
-        )
+        ),
       ],
       voteAverage: 1.0,
       voteCount: 1,

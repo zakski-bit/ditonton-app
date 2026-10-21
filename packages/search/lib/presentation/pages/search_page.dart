@@ -8,16 +8,15 @@ import '../bloc/movie_search/movie_search_event.dart';
 import '../bloc/movie_search/movie_search_state.dart';
 
 class SearchPage extends StatelessWidget {
-  static const ROUTE_NAME = SEARCH_MOVIE_ROUTE;
+  static const routeName = searchMovieRoute;
+  static const ROUTE_NAME = routeName;
 
   const SearchPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Search'),
-      ),
+      appBar: AppBar(title: const Text('Search')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -38,16 +37,11 @@ class SearchPage extends StatelessWidget {
               textInputAction: TextInputAction.search,
             ),
             const SizedBox(height: 16),
-            Text(
-              'Search Result',
-              style: kHeading6,
-            ),
+            Text('Search Result', style: heading6),
             BlocBuilder<MovieSearchBloc, MovieSearchState>(
               builder: (context, state) {
                 if (state is SearchMovieLoading) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
+                  return const Center(child: CircularProgressIndicator());
                 } else if (state is SearchMovieLoaded) {
                   final result = state.result;
                   return Expanded(
@@ -66,9 +60,7 @@ class SearchPage extends StatelessWidget {
                     child: Text(state.message),
                   );
                 } else {
-                  return Expanded(
-                    child: Container(),
-                  );
+                  return Expanded(child: Container());
                 }
               },
             ),

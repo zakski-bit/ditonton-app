@@ -15,8 +15,9 @@ void main() {
 
   setUp(() {
     mockGetPopularTvSeries = MockGetPopularTvSeries();
-    popularTvSeriesBloc =
-        PopularTvSeriesBloc(getPopularTvSeries: mockGetPopularTvSeries);
+    popularTvSeriesBloc = PopularTvSeriesBloc(
+      getPopularTvSeries: mockGetPopularTvSeries,
+    );
   });
 
   test('initial state should be empty', () {
@@ -31,10 +32,7 @@ void main() {
       return popularTvSeriesBloc;
     },
     act: (bloc) => bloc.add(FetchPopularTvSeries()),
-    expect: () => [
-      PopularTvSeriesLoading(),
-      PopularTvSeriesLoaded(testTvList),
-    ],
+    expect: () => [PopularTvSeriesLoading(), PopularTvSeriesLoaded(testTvList)],
     verify: (bloc) {
       verify(() => mockGetPopularTvSeries.execute()).called(1);
     },

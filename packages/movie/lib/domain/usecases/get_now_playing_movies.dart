@@ -1,5 +1,6 @@
 import 'package:core/core.dart';
 import 'package:dartz/dartz.dart';
+
 import '../repositories/movie_repository.dart';
 
 class GetNowPlayingMovies {

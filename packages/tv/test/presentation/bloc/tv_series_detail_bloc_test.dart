@@ -15,8 +15,9 @@ void main() {
 
   setUp(() {
     mockGetTvSeriesDetail = MockGetTvSeriesDetail();
-    tvSeriesDetailBloc =
-        TvSeriesDetailBloc(getTvSeriesDetail: mockGetTvSeriesDetail);
+    tvSeriesDetailBloc = TvSeriesDetailBloc(
+      getTvSeriesDetail: mockGetTvSeriesDetail,
+    );
   });
 
   const tId = 1;
@@ -33,10 +34,7 @@ void main() {
       return tvSeriesDetailBloc;
     },
     act: (bloc) => bloc.add(const FetchTvSeriesDetail(tId)),
-    expect: () => [
-      TvSeriesDetailLoading(),
-      TvSeriesDetailLoaded(testTvDetail),
-    ],
+    expect: () => [TvSeriesDetailLoading(), TvSeriesDetailLoaded(testTvDetail)],
     verify: (bloc) {
       verify(() => mockGetTvSeriesDetail.execute(tId)).called(1);
     },

@@ -30,11 +30,10 @@ void main() {
       providers: [
         BlocProvider<WatchlistMovieBloc>.value(value: mockWatchlistMovieBloc),
         BlocProvider<WatchlistTvSeriesBloc>.value(
-            value: mockWatchlistTvSeriesBloc),
+          value: mockWatchlistTvSeriesBloc,
+        ),
       ],
-      child: MaterialApp(
-        home: body,
-      ),
+      child: MaterialApp(home: body),
     );
   }
 
@@ -44,8 +43,7 @@ void main() {
     genreIds: const [14, 28],
     id: 557,
     originalTitle: 'Spider-Man',
-    overview:
-        'After being bitten by a genetically altered spider, nerdy high school student Peter Parker is endowed with amazing powers to become the Amazing superhero known as Spider-Man.',
+    overview: 'After being bitten by a genetically altered spider, nerdy high school student Peter Parker is endowed with amazing powers to become the Amazing superhero known as Spider-Man.',
     popularity: 60.441,
     posterPath: '/rweIrveL43TaxUN0akQEaAXL6x0.jpg',
     releaseDate: '2002-05-01',
@@ -61,8 +59,7 @@ void main() {
     genreIds: const [14, 28],
     id: 1,
     originalName: 'Game of Thrones',
-    overview:
-        'Seven noble families fight for control of the mythical land of Westeros.',
+    overview: 'Seven noble families fight for control of the mythical land of Westeros.',
     popularity: 60.441,
     posterPath: '/rweIrveL43TaxUN0akQEaAXL6x0.jpg',
     firstAirDate: '2011-04-17',
@@ -71,8 +68,9 @@ void main() {
     voteCount: 13507,
   );
 
-  testWidgets('Page should display center progress bar when loading movies',
-      (WidgetTester tester) async {
+  testWidgets('Page should display center progress bar when loading movies', (
+    WidgetTester tester,
+  ) async {
     when(() => mockWatchlistMovieBloc.state).thenReturn(
       const WatchlistMovieState(watchlistState: RequestState.Loading),
     );
@@ -87,29 +85,32 @@ void main() {
     expect(progressBarFinder, findsOneWidget);
   });
 
-  testWidgets('Page should display ListView and MovieCard when movies are loaded',
-      (WidgetTester tester) async {
-    when(() => mockWatchlistMovieBloc.state).thenReturn(
-      WatchlistMovieState(
-        watchlistState: RequestState.Loaded,
-        watchlistMovies: [tMovie],
-      ),
-    );
-    when(() => mockWatchlistTvSeriesBloc.state).thenReturn(
-      const WatchlistTvSeriesState(watchlistState: RequestState.Empty),
-    );
+  testWidgets(
+    'Page should display ListView and MovieCard when movies are loaded',
+    (WidgetTester tester) async {
+      when(() => mockWatchlistMovieBloc.state).thenReturn(
+        WatchlistMovieState(
+          watchlistState: RequestState.Loaded,
+          watchlistMovies: [tMovie],
+        ),
+      );
+      when(() => mockWatchlistTvSeriesBloc.state).thenReturn(
+        const WatchlistTvSeriesState(watchlistState: RequestState.Empty),
+      );
 
-    final listViewFinder = find.byType(ListView);
-    final movieCardFinder = find.byType(MovieCard);
+      final listViewFinder = find.byType(ListView);
+      final movieCardFinder = find.byType(MovieCard);
 
-    await tester.pumpWidget(makeTestableWidget(const WatchlistPage()));
+      await tester.pumpWidget(makeTestableWidget(const WatchlistPage()));
 
-    expect(listViewFinder, findsOneWidget);
-    expect(movieCardFinder, findsOneWidget);
-  });
+      expect(listViewFinder, findsOneWidget);
+      expect(movieCardFinder, findsOneWidget);
+    },
+  );
 
-  testWidgets('Page should display error text when movies fail to load',
-      (WidgetTester tester) async {
+  testWidgets('Page should display error text when movies fail to load', (
+    WidgetTester tester,
+  ) async {
     when(() => mockWatchlistMovieBloc.state).thenReturn(
       const WatchlistMovieState(
         watchlistState: RequestState.Error,
@@ -127,37 +128,40 @@ void main() {
     expect(textFinder, findsOneWidget);
   });
 
-  testWidgets('Page should display ListView and TvSeriesCard when TV series loaded',
-      (WidgetTester tester) async {
-    when(() => mockWatchlistMovieBloc.state).thenReturn(
-      const WatchlistMovieState(watchlistState: RequestState.Empty),
-    );
-    when(() => mockWatchlistTvSeriesBloc.state).thenReturn(
-      WatchlistTvSeriesState(
-        watchlistState: RequestState.Loaded,
-        watchlistTvSeries: [tTvSeries],
-      ),
-    );
+  testWidgets(
+    'Page should display ListView and TvSeriesCard when TV series loaded',
+    (WidgetTester tester) async {
+      when(() => mockWatchlistMovieBloc.state).thenReturn(
+        const WatchlistMovieState(watchlistState: RequestState.Empty),
+      );
+      when(() => mockWatchlistTvSeriesBloc.state).thenReturn(
+        WatchlistTvSeriesState(
+          watchlistState: RequestState.Loaded,
+          watchlistTvSeries: [tTvSeries],
+        ),
+      );
 
-    await tester.pumpWidget(makeTestableWidget(const WatchlistPage()));
+      await tester.pumpWidget(makeTestableWidget(const WatchlistPage()));
 
-    // Tap on TV Series tab
-    await tester.tap(find.text('TV Series'));
-    await tester.pump();
-    await tester.pump(const Duration(milliseconds: 300));
+      // Tap on TV Series tab
+      await tester.tap(find.text('TV Series'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 300));
 
-    final listViewFinder = find.byType(ListView);
-    final tvCardFinder = find.byType(TvSeriesCard);
+      final listViewFinder = find.byType(ListView);
+      final tvCardFinder = find.byType(TvSeriesCard);
 
-    expect(listViewFinder, findsOneWidget);
-    expect(tvCardFinder, findsOneWidget);
-  });
+      expect(listViewFinder, findsOneWidget);
+      expect(tvCardFinder, findsOneWidget);
+    },
+  );
 
-  testWidgets('Page should display error text when TV series fail to load',
-      (WidgetTester tester) async {
-    when(() => mockWatchlistMovieBloc.state).thenReturn(
-      const WatchlistMovieState(watchlistState: RequestState.Empty),
-    );
+  testWidgets('Page should display error text when TV series fail to load', (
+    WidgetTester tester,
+  ) async {
+    when(
+      () => mockWatchlistMovieBloc.state,
+    ).thenReturn(const WatchlistMovieState(watchlistState: RequestState.Empty));
     when(() => mockWatchlistTvSeriesBloc.state).thenReturn(
       const WatchlistTvSeriesState(
         watchlistState: RequestState.Error,

@@ -20,9 +20,7 @@ void main() {
   Widget makeTestableWidget(Widget body) {
     return BlocProvider<TvSearchBloc>.value(
       value: mockTvSearchBloc,
-      child: MaterialApp(
-        home: body,
-      ),
+      child: MaterialApp(home: body),
     );
   }
 
@@ -32,8 +30,7 @@ void main() {
     genreIds: const [14, 28],
     id: 1,
     originalName: 'Game of Thrones',
-    overview:
-        'Seven noble families fight for control of the mythical land of Westeros.',
+    overview: 'Seven noble families fight for control of the mythical land of Westeros.',
     popularity: 60.441,
     posterPath: '/rweIrveL43TaxUN0akQEaAXL6x0.jpg',
     firstAirDate: '2011-04-17',
@@ -43,8 +40,9 @@ void main() {
   );
   final tTvList = <TvSeries>[tTvSeriesModel];
 
-  testWidgets('Page should display progress bar when loading',
-      (WidgetTester tester) async {
+  testWidgets('Page should display progress bar when loading', (
+    WidgetTester tester,
+  ) async {
     when(() => mockTvSearchBloc.state).thenReturn(SearchTvLoading());
 
     final progressBarFinder = find.byType(CircularProgressIndicator);
@@ -54,21 +52,24 @@ void main() {
     expect(progressBarFinder, findsOneWidget);
   });
 
-  testWidgets('Page should display ListView and TvSeriesCard when data is loaded',
-      (WidgetTester tester) async {
-    when(() => mockTvSearchBloc.state).thenReturn(SearchTvLoaded(tTvList));
+  testWidgets(
+    'Page should display ListView and TvSeriesCard when data is loaded',
+    (WidgetTester tester) async {
+      when(() => mockTvSearchBloc.state).thenReturn(SearchTvLoaded(tTvList));
 
-    final listViewFinder = find.byType(ListView);
-    final tvCardFinder = find.byType(TvSeriesCard);
+      final listViewFinder = find.byType(ListView);
+      final tvCardFinder = find.byType(TvSeriesCard);
 
-    await tester.pumpWidget(makeTestableWidget(const SearchTvSeriesPage()));
+      await tester.pumpWidget(makeTestableWidget(const SearchTvSeriesPage()));
 
-    expect(listViewFinder, findsOneWidget);
-    expect(tvCardFinder, findsOneWidget);
-  });
+      expect(listViewFinder, findsOneWidget);
+      expect(tvCardFinder, findsOneWidget);
+    },
+  );
 
-  testWidgets('Page should display error text when error',
-      (WidgetTester tester) async {
+  testWidgets('Page should display error text when error', (
+    WidgetTester tester,
+  ) async {
     when(() => mockTvSearchBloc.state)
         .thenReturn(const SearchTvError('Error message'));
 
@@ -79,8 +80,9 @@ void main() {
     expect(textFinder, findsOneWidget);
   });
 
-  testWidgets('TextField should add OnTvQueryChanged event to bloc',
-      (WidgetTester tester) async {
+  testWidgets('TextField should add OnTvQueryChanged event to bloc', (
+    WidgetTester tester,
+  ) async {
     when(() => mockTvSearchBloc.state).thenReturn(SearchTvEmpty());
 
     await tester.pumpWidget(makeTestableWidget(const SearchTvSeriesPage()));
@@ -90,7 +92,8 @@ void main() {
     await tester.testTextInput.receiveAction(TextInputAction.search);
     await tester.pump();
 
-    verify(() => mockTvSearchBloc.add(const OnTvQueryChanged('game of thrones')))
-        .called(2);
+    verify(
+      () => mockTvSearchBloc.add(const OnTvQueryChanged('game of thrones')),
+    ).called(2);
   });
 }

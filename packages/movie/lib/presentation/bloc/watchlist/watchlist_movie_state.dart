@@ -37,10 +37,10 @@ class WatchlistMovieState extends Equatable {
 
   @override
   List<Object?> get props => [
-        watchlistMovies,
-        watchlistState,
-        message,
-        isAddedToWatchlist,
-        watchlistMessage,
-      ];
+    watchlistMovies,
+    watchlistState,
+    message,
+    isAddedToWatchlist,
+    watchlistMessage,
+  ];
 }

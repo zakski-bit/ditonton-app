@@ -17,7 +17,8 @@ void main() {
   setUp(() {
     mockGetTvSeriesRecommendations = MockGetTvSeriesRecommendations();
     tvSeriesRecommendationsBloc = TvSeriesRecommendationsBloc(
-        getTvSeriesRecommendations: mockGetTvSeriesRecommendations);
+      getTvSeriesRecommendations: mockGetTvSeriesRecommendations,
+    );
   });
 
   const tId = 1;

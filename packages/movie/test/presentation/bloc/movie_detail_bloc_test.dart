@@ -32,10 +32,7 @@ void main() {
       return movieDetailBloc;
     },
     act: (bloc) => bloc.add(const FetchMovieDetail(tId)),
-    expect: () => [
-      MovieDetailLoading(),
-      MovieDetailLoaded(testMovieDetail),
-    ],
+    expect: () => [MovieDetailLoading(), MovieDetailLoaded(testMovieDetail)],
     verify: (bloc) {
       verify(() => mockGetMovieDetail.execute(tId)).called(1);
     },

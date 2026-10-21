@@ -7,8 +7,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:movie/movie.dart';
 import 'package:search/search.dart';
 
-class MockMovieSearchBloc
-    extends MockBloc<MovieSearchEvent, MovieSearchState>
+class MockMovieSearchBloc extends MockBloc<MovieSearchEvent, MovieSearchState>
     implements MovieSearchBloc {}
 
 void main() {
@@ -21,9 +20,7 @@ void main() {
   Widget makeTestableWidget(Widget body) {
     return BlocProvider<MovieSearchBloc>.value(
       value: mockMovieSearchBloc,
-      child: MaterialApp(
-        home: body,
-      ),
+      child: MaterialApp(home: body),
     );
   }
 
@@ -33,8 +30,7 @@ void main() {
     genreIds: const [14, 28],
     id: 557,
     originalTitle: 'Spider-Man',
-    overview:
-        'After being bitten by a genetically altered spider, nerdy high school student Peter Parker is endowed with amazing powers to become the Amazing superhero known as Spider-Man.',
+    overview: 'After being bitten by a genetically altered spider, nerdy high school student Peter Parker is endowed with amazing powers to become the Amazing superhero known as Spider-Man.',
     popularity: 60.441,
     posterPath: '/rweIrveL43TaxUN0akQEaAXL6x0.jpg',
     releaseDate: '2002-05-01',
@@ -45,8 +41,9 @@ void main() {
   );
   final tMovieList = <Movie>[tMovieModel];
 
-  testWidgets('Page should display progress bar when loading',
-      (WidgetTester tester) async {
+  testWidgets('Page should display progress bar when loading', (
+    WidgetTester tester,
+  ) async {
     when(() => mockMovieSearchBloc.state).thenReturn(SearchMovieLoading());
 
     final progressBarFinder = find.byType(CircularProgressIndicator);
@@ -56,22 +53,25 @@ void main() {
     expect(progressBarFinder, findsOneWidget);
   });
 
-  testWidgets('Page should display ListView and MovieCard when data is loaded',
-      (WidgetTester tester) async {
-    when(() => mockMovieSearchBloc.state)
-        .thenReturn(SearchMovieLoaded(tMovieList));
+  testWidgets(
+    'Page should display ListView and MovieCard when data is loaded',
+    (WidgetTester tester) async {
+      when(() => mockMovieSearchBloc.state)
+          .thenReturn(SearchMovieLoaded(tMovieList));
 
-    final listViewFinder = find.byType(ListView);
-    final movieCardFinder = find.byType(MovieCard);
+      final listViewFinder = find.byType(ListView);
+      final movieCardFinder = find.byType(MovieCard);
 
-    await tester.pumpWidget(makeTestableWidget(const SearchPage()));
+      await tester.pumpWidget(makeTestableWidget(const SearchPage()));
 
-    expect(listViewFinder, findsOneWidget);
-    expect(movieCardFinder, findsOneWidget);
-  });
+      expect(listViewFinder, findsOneWidget);
+      expect(movieCardFinder, findsOneWidget);
+    },
+  );
 
-  testWidgets('Page should display error text when error',
-      (WidgetTester tester) async {
+  testWidgets('Page should display error text when error', (
+    WidgetTester tester,
+  ) async {
     when(() => mockMovieSearchBloc.state)
         .thenReturn(const SearchMovieError('Error message'));
 
@@ -82,8 +82,9 @@ void main() {
     expect(textFinder, findsOneWidget);
   });
 
-  testWidgets('TextField should add OnMovieQueryChanged event to bloc',
-      (WidgetTester tester) async {
+  testWidgets('TextField should add OnMovieQueryChanged event to bloc', (
+    WidgetTester tester,
+  ) async {
     when(() => mockMovieSearchBloc.state).thenReturn(SearchMovieEmpty());
 
     await tester.pumpWidget(makeTestableWidget(const SearchPage()));
@@ -93,7 +94,8 @@ void main() {
     await tester.testTextInput.receiveAction(TextInputAction.search);
     await tester.pump();
 
-    verify(() => mockMovieSearchBloc.add(const OnMovieQueryChanged('spiderman')))
-        .called(2);
+    verify(
+      () => mockMovieSearchBloc.add(const OnMovieQueryChanged('spiderman')),
+    ).called(2);
   });
 }

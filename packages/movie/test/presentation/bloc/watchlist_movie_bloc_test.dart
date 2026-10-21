@@ -92,9 +92,7 @@ void main() {
         return watchlistMovieBloc;
       },
       act: (bloc) => bloc.add(const LoadWatchlistMovieStatus(tId)),
-      expect: () => [
-        const WatchlistMovieState(isAddedToWatchlist: true),
-      ],
+      expect: () => [const WatchlistMovieState(isAddedToWatchlist: true)],
       verify: (bloc) {
         verify(() => mockGetWatchListStatus.execute(tId)).called(1);
       },
@@ -108,9 +106,7 @@ void main() {
         return watchlistMovieBloc;
       },
       act: (bloc) => bloc.add(const LoadWatchlistMovieStatus(tId)),
-      expect: () => [
-        const WatchlistMovieState(isAddedToWatchlist: false),
-      ],
+      expect: () => [const WatchlistMovieState(isAddedToWatchlist: false)],
       verify: (bloc) {
         verify(() => mockGetWatchListStatus.execute(tId)).called(1);
       },
@@ -121,8 +117,10 @@ void main() {
     blocTest<WatchlistMovieBloc, WatchlistMovieState>(
       'should emit state with watchlistMessage and isAddedToWatchlist: true when save success',
       build: () {
-        when(() => mockSaveWatchlist.execute(testMovieDetail))
-            .thenAnswer((_) async => const Right(WatchlistMovieState.watchlistAddSuccessMessage));
+        when(() => mockSaveWatchlist.execute(testMovieDetail)).thenAnswer(
+          (_) async =>
+              const Right(WatchlistMovieState.watchlistAddSuccessMessage),
+        );
         return watchlistMovieBloc;
       },
       act: (bloc) => bloc.add(AddWatchlistMovie(testMovieDetail)),
@@ -161,8 +159,10 @@ void main() {
     blocTest<WatchlistMovieBloc, WatchlistMovieState>(
       'should emit state with watchlistMessage and isAddedToWatchlist: false when remove success',
       build: () {
-        when(() => mockRemoveWatchlist.execute(testMovieDetail))
-            .thenAnswer((_) async => const Right(WatchlistMovieState.watchlistRemoveSuccessMessage));
+        when(() => mockRemoveWatchlist.execute(testMovieDetail)).thenAnswer(
+          (_) async =>
+              const Right(WatchlistMovieState.watchlistRemoveSuccessMessage),
+        );
         return watchlistMovieBloc;
       },
       act: (bloc) => bloc.add(RemoveWatchlistMovie(testMovieDetail)),

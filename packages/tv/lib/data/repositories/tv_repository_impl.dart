@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:core/core.dart';
 import 'package:dartz/dartz.dart';
+
 import '../datasources/tv_local_data_source.dart';
 import '../datasources/tv_remote_data_source.dart';
 import '../../domain/repositories/tv_repository.dart';
@@ -65,7 +66,8 @@ class TvRepositoryImpl implements TvRepository {
 
   @override
   Future<Either<Failure, List<TvSeries>>> getTvSeriesRecommendations(
-      int id) async {
+    int id,
+  ) async {
     try {
       final result = await remoteDataSource.getTvSeriesRecommendations(id);
       return Right(result.map((model) => model.toEntity()).toList());
@@ -91,8 +93,9 @@ class TvRepositoryImpl implements TvRepository {
   @override
   Future<Either<Failure, String>> saveWatchlist(TvSeriesDetail tv) async {
     try {
-      final result =
-          await localDataSource.insertWatchlist(TvTable.fromEntity(tv));
+      final result = await localDataSource.insertWatchlist(
+        TvTable.fromEntity(tv),
+      );
       return Right(result);
     } on DatabaseException catch (e) {
       return Left(DatabaseFailure(e.message));
@@ -104,8 +107,9 @@ class TvRepositoryImpl implements TvRepository {
   @override
   Future<Either<Failure, String>> removeWatchlist(TvSeriesDetail tv) async {
     try {
-      final result =
-          await localDataSource.removeWatchlist(TvTable.fromEntity(tv));
+      final result = await localDataSource.removeWatchlist(
+        TvTable.fromEntity(tv),
+      );
       return Right(result);
     } on DatabaseException catch (e) {
       return Left(DatabaseFailure(e.message));

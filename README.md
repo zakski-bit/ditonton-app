@@ -12,7 +12,7 @@ Proyek ini dibangun sebagai submission akhir pada kelas **Menjadi Flutter Develo
 
 ### 1. Multi-Package Modularization
 Aplikasi dipecah menjadi beberapa paket modular yang mandiri (*decoupled*) dengan dependensi terarah (DAG):
-* **`core`**: Menyediakan komponen inti bersama seperti Database Helper (SQLite), SSL Pinning HTTP Client, konfigurasi tema gelap (Dark Theme), palet warna (`kRichBlack`, `kOxfordBlue`, `kMikadoYellow`), tipografi Poppins, entities inti (`Movie`, `TvSeries`, `Genre`, `Season`, dsb), network exception & failures, serta navigation observer.
+* **`core`**: Menyediakan komponen inti bersama seperti Database Helper (SQLite), SSL Pinning HTTP Client, konfigurasi tema gelap (Dark Theme), palet warna (`richBlack`, `prussianBlue`, `mikadoYellow`), tipografi Poppins, entities inti (`Movie`, `TvSeries`, `Genre`, `Season`, dsb), network exception & failures, serta navigation observer.
 * **`about`**: Menampilkan profil pengembang dan informasi aplikasi.
 * **`movie`**: Modul fitur Movie lengkap (Data, Domain, Presentation) dengan BLoC untuk *Now Playing*, *Popular*, *Top Rated*, *Detail*, *Recommendations*, dan *Watchlist*.
 * **`tv`**: Modul fitur TV Series lengkap (Data, Domain, Presentation) dengan BLoC untuk *On The Air*, *Popular*, *Top Rated*, *Detail (termasuk Seasons & Episodes)*, *Recommendations*, dan *Watchlist*.

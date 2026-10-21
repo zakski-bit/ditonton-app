@@ -8,7 +8,8 @@ import '../bloc/top_rated/top_rated_tv_series_state.dart';
 import '../widgets/tv_series_card_list.dart';
 
 class TopRatedTvSeriesPage extends StatefulWidget {
-  static const ROUTE_NAME = TOP_RATED_TV_ROUTE;
+  static const routeName = topRatedTvRoute;
+  static const ROUTE_NAME = routeName;
 
   const TopRatedTvSeriesPage({Key? key}) : super(key: key);
 
@@ -30,17 +31,13 @@ class _TopRatedTvSeriesPageState extends State<TopRatedTvSeriesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Top Rated TV Series'),
-      ),
+      appBar: AppBar(title: const Text('Top Rated TV Series')),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: BlocBuilder<TopRatedTvSeriesBloc, TopRatedTvSeriesState>(
           builder: (context, state) {
             if (state is TopRatedTvSeriesLoading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
+              return const Center(child: CircularProgressIndicator());
             } else if (state is TopRatedTvSeriesLoaded) {
               return ListView.builder(
                 itemBuilder: (context, index) {

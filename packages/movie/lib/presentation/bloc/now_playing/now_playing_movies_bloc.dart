@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../domain/usecases/get_now_playing_movies.dart';
 import 'now_playing_movies_event.dart';
 import 'now_playing_movies_state.dart';
@@ -8,7 +9,7 @@ class NowPlayingMoviesBloc
   final GetNowPlayingMovies getNowPlayingMovies;
 
   NowPlayingMoviesBloc({required this.getNowPlayingMovies})
-      : super(NowPlayingMoviesEmpty()) {
+    : super(NowPlayingMoviesEmpty()) {
     on<FetchNowPlayingMovies>((event, emit) async {
       emit(NowPlayingMoviesLoading());
       final result = await getNowPlayingMovies.execute();

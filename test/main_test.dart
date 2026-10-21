@@ -15,8 +15,9 @@ void main() {
     di.locator.reset();
   });
 
-  testWidgets('MyApp should build and display HomeMoviePage',
-      (WidgetTester tester) async {
+  testWidgets('MyApp should build and display HomeMoviePage', (
+    WidgetTester tester,
+  ) async {
     await tester.pumpWidget(const MyApp());
     expect(find.byType(MaterialApp), findsOneWidget);
     expect(find.byType(Scaffold), findsWidgets);

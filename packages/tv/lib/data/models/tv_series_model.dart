@@ -31,36 +31,36 @@ class TvModel extends Equatable {
   final int voteCount;
 
   factory TvModel.fromJson(Map<String, dynamic> json) => TvModel(
-        adult: json["adult"],
-        backdropPath: json["backdrop_path"],
-        genreIds: json["genre_ids"] != null
-            ? List<int>.from(json["genre_ids"].map((x) => x))
-            : [],
-        id: json["id"],
-        originalName: json["original_name"] ?? '',
-        overview: json["overview"] ?? '',
-        popularity: (json["popularity"] as num?)?.toDouble() ?? 0.0,
-        posterPath: json["poster_path"],
-        firstAirDate: json["first_air_date"],
-        name: json["name"] ?? '',
-        voteAverage: (json["vote_average"] as num?)?.toDouble() ?? 0.0,
-        voteCount: json["vote_count"] ?? 0,
-      );
+    adult: json["adult"],
+    backdropPath: json["backdrop_path"],
+    genreIds: json["genre_ids"] != null
+        ? List<int>.from(json["genre_ids"].map((x) => x))
+        : [],
+    id: json["id"],
+    originalName: json["original_name"] ?? '',
+    overview: json["overview"] ?? '',
+    popularity: (json["popularity"] as num?)?.toDouble() ?? 0.0,
+    posterPath: json["poster_path"],
+    firstAirDate: json["first_air_date"],
+    name: json["name"] ?? '',
+    voteAverage: (json["vote_average"] as num?)?.toDouble() ?? 0.0,
+    voteCount: json["vote_count"] ?? 0,
+  );
 
   Map<String, dynamic> toJson() => {
-        "adult": adult,
-        "backdrop_path": backdropPath,
-        "genre_ids": List<dynamic>.from(genreIds.map((x) => x)),
-        "id": id,
-        "original_name": originalName,
-        "overview": overview,
-        "popularity": popularity,
-        "poster_path": posterPath,
-        "first_air_date": firstAirDate,
-        "name": name,
-        "vote_average": voteAverage,
-        "vote_count": voteCount,
-      };
+    "adult": adult,
+    "backdrop_path": backdropPath,
+    "genre_ids": List<dynamic>.from(genreIds.map((x) => x)),
+    "id": id,
+    "original_name": originalName,
+    "overview": overview,
+    "popularity": popularity,
+    "poster_path": posterPath,
+    "first_air_date": firstAirDate,
+    "name": name,
+    "vote_average": voteAverage,
+    "vote_count": voteCount,
+  };
 
   TvSeries toEntity() {
     return TvSeries(
@@ -81,17 +81,17 @@ class TvModel extends Equatable {
 
   @override
   List<Object?> get props => [
-        adult,
-        backdropPath,
-        genreIds,
-        id,
-        originalName,
-        overview,
-        popularity,
-        posterPath,
-        firstAirDate,
-        name,
-        voteAverage,
-        voteCount,
-      ];
+    adult,
+    backdropPath,
+    genreIds,
+    id,
+    originalName,
+    overview,
+    popularity,
+    posterPath,
+    firstAirDate,
+    name,
+    voteAverage,
+    voteCount,
+  ];
 }

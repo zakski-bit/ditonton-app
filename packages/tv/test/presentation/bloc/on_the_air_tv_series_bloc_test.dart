@@ -16,7 +16,8 @@ void main() {
   setUp(() {
     mockGetOnTheAirTvSeries = MockGetOnTheAirTvSeries();
     onTheAirTvSeriesBloc = OnTheAirTvSeriesBloc(
-        getOnTheAirTvSeries: mockGetOnTheAirTvSeries);
+      getOnTheAirTvSeries: mockGetOnTheAirTvSeries,
+    );
   });
 
   test('initial state should be empty', () {

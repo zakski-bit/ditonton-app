@@ -15,7 +15,8 @@ import '../bloc/watchlist/watchlist_tv_series_event.dart';
 import '../bloc/watchlist/watchlist_tv_series_state.dart';
 
 class TvSeriesDetailPage extends StatefulWidget {
-  static const ROUTE_NAME = TV_DETAIL_ROUTE;
+  static const routeName = tvDetailRoute;
+  static const ROUTE_NAME = routeName;
 
   final int id;
   const TvSeriesDetailPage({Key? key, required this.id}) : super(key: key);
@@ -31,12 +32,12 @@ class _TvSeriesDetailPageState extends State<TvSeriesDetailPage> {
     Future.microtask(() {
       if (mounted) {
         context.read<TvSeriesDetailBloc>().add(FetchTvSeriesDetail(widget.id));
-        context
-            .read<TvSeriesRecommendationsBloc>()
-            .add(FetchTvSeriesRecommendations(widget.id));
-        context
-            .read<WatchlistTvSeriesBloc>()
-            .add(LoadWatchlistTvSeriesStatus(widget.id));
+        context.read<TvSeriesRecommendationsBloc>().add(
+          FetchTvSeriesRecommendations(widget.id),
+        );
+        context.read<WatchlistTvSeriesBloc>().add(
+          LoadWatchlistTvSeriesStatus(widget.id),
+        );
       }
     });
   }
@@ -47,14 +48,10 @@ class _TvSeriesDetailPageState extends State<TvSeriesDetailPage> {
       body: BlocBuilder<TvSeriesDetailBloc, TvSeriesDetailState>(
         builder: (context, state) {
           if (state is TvSeriesDetailLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const Center(child: CircularProgressIndicator());
           } else if (state is TvSeriesDetailLoaded) {
             final tvSeries = state.tvSeriesDetail;
-            return SafeArea(
-              child: DetailContent(tvSeries),
-            );
+            return SafeArea(child: DetailContent(tvSeries));
           } else if (state is TvSeriesDetailError) {
             return Center(
               key: const Key('error_message'),
@@ -80,11 +77,10 @@ class DetailContent extends StatelessWidget {
     return Stack(
       children: [
         CachedNetworkImage(
-          imageUrl: '$BASE_IMAGE_URL${tvSeries.posterPath}',
+          imageUrl: '$baseImageUrl${tvSeries.posterPath}',
           width: screenWidth,
-          placeholder: (context, url) => const Center(
-            child: CircularProgressIndicator(),
-          ),
+          placeholder: (context, url) =>
+              const Center(child: CircularProgressIndicator()),
           errorWidget: (context, url, error) => const Icon(Icons.error),
         ),
         Container(
@@ -93,14 +89,10 @@ class DetailContent extends StatelessWidget {
             builder: (context, scrollController) {
               return Container(
                 decoration: const BoxDecoration(
-                  color: kRichBlack,
+                  color: richBlack,
                   borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
                 ),
-                padding: const EdgeInsets.only(
-                  left: 16,
-                  top: 16,
-                  right: 16,
-                ),
+                padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
                 child: Stack(
                   children: [
                     Container(
@@ -110,71 +102,12 @@ class DetailContent extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Text(tvSeries.name, style: heading5),
+                            _TvSeriesWatchlistButton(tvSeries: tvSeries),
+                            Text(_showGenres(tvSeries.genres)),
                             Text(
-                              tvSeries.name,
-                              style: kHeading5,
-                            ),
-                            BlocConsumer<WatchlistTvSeriesBloc,
-                                WatchlistTvSeriesState>(
-                              listenWhen: (previous, current) =>
-                                  previous.watchlistMessage !=
-                                      current.watchlistMessage &&
-                                  current.watchlistMessage.isNotEmpty,
-                              listener: (context, state) {
-                                final message = state.watchlistMessage;
-                                if (message ==
-                                        WatchlistTvSeriesState
-                                            .watchlistAddSuccessMessage ||
-                                    message ==
-                                        WatchlistTvSeriesState
-                                            .watchlistRemoveSuccessMessage) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(message),
-                                      duration: const Duration(seconds: 1),
-                                    ),
-                                  );
-                                } else {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return AlertDialog(
-                                        content: Text(message),
-                                      );
-                                    },
-                                  );
-                                }
-                              },
-                              builder: (context, state) {
-                                final isAddedWatchlist =
-                                    state.isAddedToWatchlist;
-                                return FilledButton(
-                                  onPressed: () {
-                                    if (!isAddedWatchlist) {
-                                      context.read<WatchlistTvSeriesBloc>().add(
-                                          AddWatchlistTvSeries(tvSeries));
-                                    } else {
-                                      context.read<WatchlistTvSeriesBloc>().add(
-                                          RemoveWatchlistTvSeries(tvSeries));
-                                    }
-                                  },
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      isAddedWatchlist
-                                          ? const Icon(Icons.check)
-                                          : const Icon(Icons.add),
-                                      const Text('Watchlist'),
-                                    ],
-                                  ),
-                                );
-                              },
-                            ),
-                            Text(
-                              _showGenres(tvSeries.genres),
-                            ),
-                            Text(
-                              '${tvSeries.numberOfSeasons} Season(s), ${tvSeries.numberOfEpisodes} Episode(s)',
+                              '${tvSeries.numberOfSeasons} Season(s), '
+                              '${tvSeries.numberOfEpisodes} Episode(s)',
                             ),
                             Row(
                               children: [
@@ -183,18 +116,15 @@ class DetailContent extends StatelessWidget {
                                   itemCount: 5,
                                   itemBuilder: (context, index) => const Icon(
                                     Icons.star,
-                                    color: kMikadoYellow,
+                                    color: mikadoYellow,
                                   ),
                                   itemSize: 24,
                                 ),
-                                Text('${tvSeries.voteAverage}')
+                                Text('${tvSeries.voteAverage}'),
                               ],
                             ),
                             const SizedBox(height: 16),
-                            Text(
-                              'Overview',
-                              style: kHeading6,
-                            ),
+                            Text('Overview', style: heading6),
                             Text(
                               tvSeries.overview.isNotEmpty
                                   ? tvSeries.overview
@@ -202,14 +132,10 @@ class DetailContent extends StatelessWidget {
                             ),
                             const SizedBox(height: 16),
                             if (tvSeries.seasons.isNotEmpty) ...[
-                              Text(
-                                'Seasons',
-                                style: kHeading6,
-                              ),
+                              Text('Seasons', style: heading6),
                               Container(
                                 height: 160,
-                                margin:
-                                    const EdgeInsets.symmetric(vertical: 8),
+                                margin: const EdgeInsets.symmetric(vertical: 8),
                                 child: ListView.builder(
                                   scrollDirection: Axis.horizontal,
                                   itemCount: tvSeries.seasons.length,
@@ -221,12 +147,11 @@ class DetailContent extends StatelessWidget {
                               ),
                               const SizedBox(height: 16),
                             ],
-                            Text(
-                              'Recommendations',
-                              style: kHeading6,
-                            ),
-                            BlocBuilder<TvSeriesRecommendationsBloc,
-                                TvSeriesRecommendationsState>(
+                            Text('Recommendations', style: heading6),
+                            BlocBuilder<
+                              TvSeriesRecommendationsBloc,
+                              TvSeriesRecommendationsState
+                            >(
                               builder: (context, state) {
                                 if (state is TvSeriesRecommendationsLoading) {
                                   return const Center(
@@ -250,26 +175,28 @@ class DetailContent extends StatelessWidget {
                                             onTap: () {
                                               Navigator.pushReplacementNamed(
                                                 context,
-                                                TvSeriesDetailPage.ROUTE_NAME,
+                                                TvSeriesDetailPage.routeName,
                                                 arguments: recTv.id,
                                               );
                                             },
                                             child: ClipRRect(
                                               borderRadius:
                                                   const BorderRadius.all(
-                                                Radius.circular(8),
-                                              ),
+                                                    Radius.circular(8),
+                                                  ),
                                               child: CachedNetworkImage(
                                                 imageUrl:
-                                                    '$BASE_IMAGE_URL${recTv.posterPath}',
+                                                    '$baseImageUrl${recTv.posterPath}',
                                                 placeholder: (context, url) =>
                                                     const Center(
-                                                  child:
-                                                      CircularProgressIndicator(),
-                                                ),
-                                                errorWidget:
-                                                    (context, url, error) =>
-                                                        const Icon(Icons.error),
+                                                      child:
+                                                          CircularProgressIndicator(),
+                                                    ),
+                                                errorWidget: (
+                                                  context,
+                                                  url,
+                                                  error,
+                                                ) => const Icon(Icons.error),
                                               ),
                                             ),
                                           ),
@@ -305,7 +232,7 @@ class DetailContent extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: CircleAvatar(
-            backgroundColor: kRichBlack,
+            backgroundColor: richBlack,
             foregroundColor: Colors.white,
             child: IconButton(
               icon: const Icon(Icons.arrow_back),
@@ -314,7 +241,7 @@ class DetailContent extends StatelessWidget {
               },
             ),
           ),
-        )
+        ),
       ],
     );
   }
@@ -330,13 +257,12 @@ class DetailContent extends StatelessWidget {
             borderRadius: const BorderRadius.all(Radius.circular(8)),
             child: season.posterPath != null
                 ? CachedNetworkImage(
-                    imageUrl: '$BASE_IMAGE_URL${season.posterPath}',
+                    imageUrl: '$baseImageUrl${season.posterPath}',
                     width: 100,
                     height: 110,
                     fit: BoxFit.cover,
-                    placeholder: (context, url) => const Center(
-                      child: CircularProgressIndicator(),
-                    ),
+                    placeholder: (context, url) =>
+                        const Center(child: CircularProgressIndicator()),
                     errorWidget: (context, url, error) =>
                         const Icon(Icons.error),
                   )
@@ -374,5 +300,64 @@ class DetailContent extends StatelessWidget {
     }
 
     return result.substring(0, result.length - 2);
+  }
+}
+
+class _TvSeriesWatchlistButton extends StatelessWidget {
+  final TvSeriesDetail tvSeries;
+
+  const _TvSeriesWatchlistButton({required this.tvSeries});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<WatchlistTvSeriesBloc, WatchlistTvSeriesState>(
+      listenWhen: (previous, current) =>
+          previous.watchlistMessage != current.watchlistMessage &&
+          current.watchlistMessage.isNotEmpty,
+      listener: (context, state) {
+        final message = state.watchlistMessage;
+        if (message == WatchlistTvSeriesState.watchlistAddSuccessMessage ||
+            message == WatchlistTvSeriesState.watchlistRemoveSuccessMessage) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(message),
+              duration: const Duration(seconds: 1),
+            ),
+          );
+        } else {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(content: Text(message));
+            },
+          );
+        }
+      },
+      builder: (context, state) {
+        final isAddedWatchlist = state.isAddedToWatchlist;
+        return FilledButton(
+          onPressed: () {
+            if (!isAddedWatchlist) {
+              context.read<WatchlistTvSeriesBloc>().add(
+                AddWatchlistTvSeries(tvSeries),
+              );
+            } else {
+              context.read<WatchlistTvSeriesBloc>().add(
+                RemoveWatchlistTvSeries(tvSeries),
+              );
+            }
+          },
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              isAddedWatchlist
+                  ? const Icon(Icons.check)
+                  : const Icon(Icons.add),
+              const Text('Watchlist'),
+            ],
+          ),
+        );
+      },
+    );
   }
 }

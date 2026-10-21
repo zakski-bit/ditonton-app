@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../domain/usecases/get_popular_tv_series.dart';
 import 'popular_tv_series_event.dart';
 import 'popular_tv_series_state.dart';
@@ -8,7 +9,7 @@ class PopularTvSeriesBloc
   final GetPopularTvSeries getPopularTvSeries;
 
   PopularTvSeriesBloc({required this.getPopularTvSeries})
-      : super(PopularTvSeriesEmpty()) {
+    : super(PopularTvSeriesEmpty()) {
     on<FetchPopularTvSeries>((event, emit) async {
       emit(PopularTvSeriesLoading());
       final result = await getPopularTvSeries.execute();

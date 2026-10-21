@@ -30,7 +30,7 @@ void main() {
         posterPath: "/poster.jpg",
         seasonNumber: 1,
         episodeCount: 10,
-      )
+      ),
     ],
   );
 
@@ -56,7 +56,7 @@ void main() {
         posterPath: "/poster.jpg",
         seasonNumber: 1,
         episodeCount: 10,
-      )
+      ),
     ],
   );
 
@@ -69,34 +69,38 @@ void main() {
 
   group('fromJson', () {
     test('should return a valid model from JSON', () async {
-      final Map<String, dynamic> jsonMap =
-          json.decode(readJson('dummy_data/tv_detail.json'));
+      final Map<String, dynamic> jsonMap = json.decode(
+        readJson('dummy_data/tv_detail.json'),
+      );
       final result = TvDetailResponse.fromJson(jsonMap);
       expect(result, tTvDetailResponse);
     });
 
-    test('should return a valid model from JSON when genres and seasons are null', () {
-      final jsonMap = {
-        "adult": false,
-        "backdrop_path": "/path.jpg",
-        "genres": null,
-        "id": 1,
-        "original_name": "Original Name",
-        "overview": "Overview",
-        "popularity": 1.0,
-        "poster_path": "/path.jpg",
-        "first_air_date": "2020-05-05",
-        "name": "Name",
-        "vote_average": 1.0,
-        "vote_count": 1,
-        "number_of_episodes": 10,
-        "number_of_seasons": 1,
-        "seasons": null,
-      };
-      final result = TvDetailResponse.fromJson(jsonMap);
-      expect(result.genres, []);
-      expect(result.seasons, []);
-    });
+    test(
+      'should return a valid model from JSON when genres and seasons are null',
+      () {
+        final jsonMap = {
+          "adult": false,
+          "backdrop_path": "/path.jpg",
+          "genres": null,
+          "id": 1,
+          "original_name": "Original Name",
+          "overview": "Overview",
+          "popularity": 1.0,
+          "poster_path": "/path.jpg",
+          "first_air_date": "2020-05-05",
+          "name": "Name",
+          "vote_average": 1.0,
+          "vote_count": 1,
+          "number_of_episodes": 10,
+          "number_of_seasons": 1,
+          "seasons": null,
+        };
+        final result = TvDetailResponse.fromJson(jsonMap);
+        expect(result.genres, []);
+        expect(result.seasons, []);
+      },
+    );
   });
 
   group('toJson', () {
@@ -106,7 +110,7 @@ void main() {
         "adult": false,
         "backdrop_path": "/path.jpg",
         "genres": [
-          {"id": 1, "name": "Action"}
+          {"id": 1, "name": "Action"},
         ],
         "id": 1,
         "original_name": "Original Name",
@@ -126,8 +130,8 @@ void main() {
             "overview": "Season 1 Overview",
             "poster_path": "/poster.jpg",
             "season_number": 1,
-            "episode_count": 10
-          }
+            "episode_count": 10,
+          },
         ],
       };
       expect(result, expectedJsonMap);

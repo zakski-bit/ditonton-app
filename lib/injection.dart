@@ -10,29 +10,15 @@ final locator = GetIt.instance;
 void init() {
   // BLoC - Movie
   locator.registerFactory(
-    () => NowPlayingMoviesBloc(
-      getNowPlayingMovies: locator(),
-    ),
+    () => NowPlayingMoviesBloc(getNowPlayingMovies: locator()),
   );
+  locator.registerFactory(() => PopularMoviesBloc(getPopularMovies: locator()));
   locator.registerFactory(
-    () => PopularMoviesBloc(
-      getPopularMovies: locator(),
-    ),
+    () => TopRatedMoviesBloc(getTopRatedMovies: locator()),
   );
+  locator.registerFactory(() => MovieDetailBloc(getMovieDetail: locator()));
   locator.registerFactory(
-    () => TopRatedMoviesBloc(
-      getTopRatedMovies: locator(),
-    ),
-  );
-  locator.registerFactory(
-    () => MovieDetailBloc(
-      getMovieDetail: locator(),
-    ),
-  );
-  locator.registerFactory(
-    () => MovieRecommendationsBloc(
-      getMovieRecommendations: locator(),
-    ),
+    () => MovieRecommendationsBloc(getMovieRecommendations: locator()),
   );
   locator.registerFactory(
     () => WatchlistMovieBloc(
@@ -45,29 +31,19 @@ void init() {
 
   // BLoC - TV Series
   locator.registerFactory(
-    () => OnTheAirTvSeriesBloc(
-      getOnTheAirTvSeries: locator(),
-    ),
+    () => OnTheAirTvSeriesBloc(getOnTheAirTvSeries: locator()),
   );
   locator.registerFactory(
-    () => PopularTvSeriesBloc(
-      getPopularTvSeries: locator(),
-    ),
+    () => PopularTvSeriesBloc(getPopularTvSeries: locator()),
   );
   locator.registerFactory(
-    () => TopRatedTvSeriesBloc(
-      getTopRatedTvSeries: locator(),
-    ),
+    () => TopRatedTvSeriesBloc(getTopRatedTvSeries: locator()),
   );
   locator.registerFactory(
-    () => TvSeriesDetailBloc(
-      getTvSeriesDetail: locator(),
-    ),
+    () => TvSeriesDetailBloc(getTvSeriesDetail: locator()),
   );
   locator.registerFactory(
-    () => TvSeriesRecommendationsBloc(
-      getTvSeriesRecommendations: locator(),
-    ),
+    () => TvSeriesRecommendationsBloc(getTvSeriesRecommendations: locator()),
   );
   locator.registerFactory(
     () => WatchlistTvSeriesBloc(
@@ -79,16 +55,8 @@ void init() {
   );
 
   // BLoC - Search
-  locator.registerFactory(
-    () => MovieSearchBloc(
-      searchMovies: locator(),
-    ),
-  );
-  locator.registerFactory(
-    () => TvSearchBloc(
-      searchTvSeries: locator(),
-    ),
-  );
+  locator.registerFactory(() => MovieSearchBloc(searchMovies: locator()));
+  locator.registerFactory(() => TvSearchBloc(searchTvSeries: locator()));
 
   // Use cases - Movie
   locator.registerLazySingleton(() => GetNowPlayingMovies(locator()));

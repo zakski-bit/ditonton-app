@@ -92,9 +92,7 @@ void main() {
         return watchlistTvSeriesBloc;
       },
       act: (bloc) => bloc.add(const LoadWatchlistTvSeriesStatus(tId)),
-      expect: () => [
-        const WatchlistTvSeriesState(isAddedToWatchlist: true),
-      ],
+      expect: () => [const WatchlistTvSeriesState(isAddedToWatchlist: true)],
       verify: (bloc) {
         verify(() => mockGetWatchlistStatusTv.execute(tId)).called(1);
       },
@@ -108,9 +106,7 @@ void main() {
         return watchlistTvSeriesBloc;
       },
       act: (bloc) => bloc.add(const LoadWatchlistTvSeriesStatus(tId)),
-      expect: () => [
-        const WatchlistTvSeriesState(isAddedToWatchlist: false),
-      ],
+      expect: () => [const WatchlistTvSeriesState(isAddedToWatchlist: false)],
       verify: (bloc) {
         verify(() => mockGetWatchlistStatusTv.execute(tId)).called(1);
       },
@@ -121,8 +117,10 @@ void main() {
     blocTest<WatchlistTvSeriesBloc, WatchlistTvSeriesState>(
       'should emit state with watchlistMessage and isAddedToWatchlist: true when save success',
       build: () {
-        when(() => mockSaveWatchlistTv.execute(testTvDetail))
-            .thenAnswer((_) async => const Right(WatchlistTvSeriesState.watchlistAddSuccessMessage));
+        when(() => mockSaveWatchlistTv.execute(testTvDetail)).thenAnswer(
+          (_) async =>
+              const Right(WatchlistTvSeriesState.watchlistAddSuccessMessage),
+        );
         return watchlistTvSeriesBloc;
       },
       act: (bloc) => bloc.add(AddWatchlistTvSeries(testTvDetail)),
@@ -161,14 +159,17 @@ void main() {
     blocTest<WatchlistTvSeriesBloc, WatchlistTvSeriesState>(
       'should emit state with watchlistMessage and isAddedToWatchlist: false when remove success',
       build: () {
-        when(() => mockRemoveWatchlistTv.execute(testTvDetail))
-            .thenAnswer((_) async => const Right(WatchlistTvSeriesState.watchlistRemoveSuccessMessage));
+        when(() => mockRemoveWatchlistTv.execute(testTvDetail)).thenAnswer(
+          (_) async =>
+              const Right(WatchlistTvSeriesState.watchlistRemoveSuccessMessage),
+        );
         return watchlistTvSeriesBloc;
       },
       act: (bloc) => bloc.add(RemoveWatchlistTvSeries(testTvDetail)),
       expect: () => [
         const WatchlistTvSeriesState(
-          watchlistMessage: WatchlistTvSeriesState.watchlistRemoveSuccessMessage,
+          watchlistMessage:
+              WatchlistTvSeriesState.watchlistRemoveSuccessMessage,
           isAddedToWatchlist: false,
         ),
       ],

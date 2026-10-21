@@ -4,7 +4,6 @@ import 'dart:ui';
 import 'package:about/about.dart';
 import 'package:core/core.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,8 +21,11 @@ void main() async {
 
   NavigatorObserver? analyticsObserver;
   try {
-    await Firebase.initializeApp();
-    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+    final originalOnError = FlutterError.onError;
+    FlutterError.onError = (errorDetails) {
+      FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+      originalOnError?.call(errorDetails);
+    };
     PlatformDispatcher.instance.onError = (error, stack) {
       unawaited(
         FirebaseCrashlytics.instance
@@ -78,11 +80,11 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Ditonton',
         theme: ThemeData.dark().copyWith(
-          colorScheme: kColorScheme,
-          primaryColor: kRichBlack,
-          scaffoldBackgroundColor: kRichBlack,
-          textTheme: kTextTheme,
-          drawerTheme: kDrawerTheme,
+          colorScheme: colorScheme,
+          primaryColor: richBlack,
+          scaffoldBackgroundColor: richBlack,
+          textTheme: textTheme,
+          drawerTheme: drawerTheme,
         ),
         home: HomeMoviePage(),
         navigatorObservers: [
@@ -91,53 +93,53 @@ class MyApp extends StatelessWidget {
         ],
         onGenerateRoute: (RouteSettings settings) {
           switch (settings.name) {
-            case HOME_MOVIE_ROUTE:
+            case homeMovieRoute:
               return MaterialPageRoute(builder: (_) => HomeMoviePage());
-            case POPULAR_MOVIES_ROUTE:
+            case popularMoviesRoute:
               return CupertinoPageRoute(
                 builder: (_) => const PopularMoviesPage(),
               );
-            case TOP_RATED_MOVIES_ROUTE:
+            case topRatedMoviesRoute:
               return CupertinoPageRoute(
                 builder: (_) => const TopRatedMoviesPage(),
               );
-            case MOVIE_DETAIL_ROUTE:
+            case movieDetailRoute:
               final id = settings.arguments as int;
               return MaterialPageRoute(
                 builder: (_) => MovieDetailPage(id: id),
                 settings: settings,
               );
-            case SEARCH_MOVIE_ROUTE:
+            case searchMovieRoute:
               return CupertinoPageRoute(builder: (_) => const SearchPage());
-            case WATCHLIST_ROUTE:
+            case watchlistRoute:
               return MaterialPageRoute(builder: (_) => const WatchlistPage());
-            case ABOUT_ROUTE:
+            case aboutRoute:
               return MaterialPageRoute(builder: (_) => AboutPage());
 
             // TV Series Routes
-            case HOME_TV_ROUTE:
+            case homeTvRoute:
               return MaterialPageRoute(
                 builder: (_) => const HomeTvSeriesPage(),
               );
-            case ON_THE_AIR_TV_ROUTE:
+            case onTheAirTvRoute:
               return CupertinoPageRoute(
                 builder: (_) => const OnTheAirTvSeriesPage(),
               );
-            case POPULAR_TV_ROUTE:
+            case popularTvRoute:
               return CupertinoPageRoute(
                 builder: (_) => const PopularTvSeriesPage(),
               );
-            case TOP_RATED_TV_ROUTE:
+            case topRatedTvRoute:
               return CupertinoPageRoute(
                 builder: (_) => const TopRatedTvSeriesPage(),
               );
-            case TV_DETAIL_ROUTE:
+            case tvDetailRoute:
               final id = settings.arguments as int;
               return MaterialPageRoute(
                 builder: (_) => TvSeriesDetailPage(id: id),
                 settings: settings,
               );
-            case SEARCH_TV_ROUTE:
+            case searchTvRoute:
               return CupertinoPageRoute(
                 builder: (_) => const SearchTvSeriesPage(),
               );

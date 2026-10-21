@@ -21,14 +21,13 @@ void main() {
   Widget makeTestableWidget(Widget body) {
     return BlocProvider<PopularMoviesBloc>.value(
       value: mockBloc,
-      child: MaterialApp(
-        home: body,
-      ),
+      child: MaterialApp(home: body),
     );
   }
 
-  testWidgets('Page should display center progress bar when loading',
-      (WidgetTester tester) async {
+  testWidgets('Page should display center progress bar when loading', (
+    WidgetTester tester,
+  ) async {
     when(() => mockBloc.state).thenReturn(PopularMoviesLoading());
 
     final progressBarFinder = find.byType(CircularProgressIndicator);
@@ -40,21 +39,24 @@ void main() {
     expect(progressBarFinder, findsOneWidget);
   });
 
-  testWidgets('Page should display ListView and MovieCard when data is loaded',
-      (WidgetTester tester) async {
-    when(() => mockBloc.state).thenReturn(PopularMoviesLoaded([testMovie]));
+  testWidgets(
+    'Page should display ListView and MovieCard when data is loaded',
+    (WidgetTester tester) async {
+      when(() => mockBloc.state).thenReturn(PopularMoviesLoaded([testMovie]));
 
-    final listViewFinder = find.byType(ListView);
-    final cardFinder = find.byType(MovieCard);
+      final listViewFinder = find.byType(ListView);
+      final cardFinder = find.byType(MovieCard);
 
-    await tester.pumpWidget(makeTestableWidget(const PopularMoviesPage()));
+      await tester.pumpWidget(makeTestableWidget(const PopularMoviesPage()));
 
-    expect(listViewFinder, findsOneWidget);
-    expect(cardFinder, findsOneWidget);
-  });
+      expect(listViewFinder, findsOneWidget);
+      expect(cardFinder, findsOneWidget);
+    },
+  );
 
-  testWidgets('Page should display text with message when Error',
-      (WidgetTester tester) async {
+  testWidgets('Page should display text with message when Error', (
+    WidgetTester tester,
+  ) async {
     when(() => mockBloc.state)
         .thenReturn(const PopularMoviesError('Error message'));
 

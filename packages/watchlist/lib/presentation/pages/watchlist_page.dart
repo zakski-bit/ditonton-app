@@ -5,7 +5,8 @@ import 'package:movie/movie.dart';
 import 'package:tv/tv.dart';
 
 class WatchlistPage extends StatefulWidget {
-  static const ROUTE_NAME = WATCHLIST_ROUTE;
+  static const routeName = watchlistRoute;
+  static const ROUTE_NAME = routeName;
 
   const WatchlistPage({Key? key}) : super(key: key);
 
@@ -43,16 +44,10 @@ class _WatchlistPageState extends State<WatchlistPage> with RouteAware {
         appBar: AppBar(
           title: const Text('Watchlist'),
           bottom: const TabBar(
-            indicatorColor: kMikadoYellow,
+            indicatorColor: mikadoYellow,
             tabs: [
-              Tab(
-                icon: Icon(Icons.movie),
-                text: 'Movies',
-              ),
-              Tab(
-                icon: Icon(Icons.tv),
-                text: 'TV Series',
-              ),
+              Tab(icon: Icon(Icons.movie), text: 'Movies'),
+              Tab(icon: Icon(Icons.tv), text: 'TV Series'),
             ],
           ),
         ),
@@ -63,9 +58,7 @@ class _WatchlistPageState extends State<WatchlistPage> with RouteAware {
               child: BlocBuilder<WatchlistMovieBloc, WatchlistMovieState>(
                 builder: (context, state) {
                   if (state.watchlistState == RequestState.Loading) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
+                    return const Center(child: CircularProgressIndicator());
                   } else if (state.watchlistState == RequestState.Loaded) {
                     return ListView.builder(
                       itemBuilder: (context, index) {
@@ -80,9 +73,7 @@ class _WatchlistPageState extends State<WatchlistPage> with RouteAware {
                       child: Text(state.message),
                     );
                   } else {
-                    return const Center(
-                      child: Text('No Watchlist'),
-                    );
+                    return const Center(child: Text('No Watchlist'));
                   }
                 },
               ),
@@ -92,9 +83,7 @@ class _WatchlistPageState extends State<WatchlistPage> with RouteAware {
               child: BlocBuilder<WatchlistTvSeriesBloc, WatchlistTvSeriesState>(
                 builder: (context, state) {
                   if (state.watchlistState == RequestState.Loading) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
+                    return const Center(child: CircularProgressIndicator());
                   } else if (state.watchlistState == RequestState.Loaded) {
                     return ListView.builder(
                       itemBuilder: (context, index) {
@@ -109,9 +98,7 @@ class _WatchlistPageState extends State<WatchlistPage> with RouteAware {
                       child: Text(state.message),
                     );
                   } else {
-                    return const Center(
-                      child: Text('No Watchlist'),
-                    );
+                    return const Center(child: Text('No Watchlist'));
                   }
                 },
               ),

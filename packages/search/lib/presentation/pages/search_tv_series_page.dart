@@ -8,16 +8,15 @@ import '../bloc/tv_search/tv_search_event.dart';
 import '../bloc/tv_search/tv_search_state.dart';
 
 class SearchTvSeriesPage extends StatelessWidget {
-  static const ROUTE_NAME = SEARCH_TV_ROUTE;
+  static const routeName = searchTvRoute;
+  static const ROUTE_NAME = routeName;
 
   const SearchTvSeriesPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Search TV Series'),
-      ),
+      appBar: AppBar(title: const Text('Search TV Series')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -32,25 +31,20 @@ class SearchTvSeriesPage extends StatelessWidget {
               },
               decoration: const InputDecoration(
                 hintText: 'Search title',
-                prefixIcon: Icon(Icons.search, color: kMikadoYellow),
+                prefixIcon: Icon(Icons.search, color: mikadoYellow),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: kMikadoYellow),
+                  borderSide: BorderSide(color: mikadoYellow),
                 ),
                 border: OutlineInputBorder(),
               ),
               textInputAction: TextInputAction.search,
             ),
             const SizedBox(height: 16),
-            Text(
-              'Search Result',
-              style: kHeading6,
-            ),
+            Text('Search Result', style: heading6),
             BlocBuilder<TvSearchBloc, TvSearchState>(
               builder: (context, state) {
                 if (state is SearchTvLoading) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
+                  return const Center(child: CircularProgressIndicator());
                 } else if (state is SearchTvLoaded) {
                   final result = state.result;
                   return Expanded(
@@ -69,9 +63,7 @@ class SearchTvSeriesPage extends StatelessWidget {
                     child: Text(state.message),
                   );
                 } else {
-                  return Expanded(
-                    child: Container(),
-                  );
+                  return Expanded(child: Container());
                 }
               },
             ),

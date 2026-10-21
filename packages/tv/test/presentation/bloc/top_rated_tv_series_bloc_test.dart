@@ -15,8 +15,9 @@ void main() {
 
   setUp(() {
     mockGetTopRatedTvSeries = MockGetTopRatedTvSeries();
-    topRatedTvSeriesBloc =
-        TopRatedTvSeriesBloc(getTopRatedTvSeries: mockGetTopRatedTvSeries);
+    topRatedTvSeriesBloc = TopRatedTvSeriesBloc(
+      getTopRatedTvSeries: mockGetTopRatedTvSeries,
+    );
   });
 
   test('initial state should be empty', () {

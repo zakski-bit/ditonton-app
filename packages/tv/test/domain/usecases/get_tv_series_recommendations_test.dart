@@ -18,14 +18,16 @@ void main() {
   const tId = 1;
   final tTvSeries = <TvSeries>[];
 
-  test('should get list of TV series recommendations from the repository',
-      () async {
-    // arrange
-    when(mockTvRepository.getTvSeriesRecommendations(tId))
-        .thenAnswer((_) async => Right(tTvSeries));
-    // act
-    final result = await usecase.execute(tId);
-    // assert
-    expect(result, Right(tTvSeries));
-  });
+  test(
+    'should get list of TV series recommendations from the repository',
+    () async {
+      // arrange
+      when(mockTvRepository.getTvSeriesRecommendations(tId))
+          .thenAnswer((_) async => Right(tTvSeries));
+      // act
+      final result = await usecase.execute(tId);
+      // assert
+      expect(result, Right(tTvSeries));
+    },
+  );
 }

@@ -46,10 +46,7 @@ void main() {
     },
     act: (bloc) => bloc.add(const OnTvQueryChanged(tQuery)),
     wait: const Duration(milliseconds: 500),
-    expect: () => [
-      SearchTvLoading(),
-      SearchTvLoaded(tTvList),
-    ],
+    expect: () => [SearchTvLoading(), SearchTvLoaded(tTvList)],
     verify: (bloc) {
       verify(() => mockSearchTvSeries.execute(tQuery)).called(1);
     },
@@ -64,10 +61,7 @@ void main() {
     },
     act: (bloc) => bloc.add(const OnTvQueryChanged(tQuery)),
     wait: const Duration(milliseconds: 500),
-    expect: () => [
-      SearchTvLoading(),
-      const SearchTvError('Server Failure'),
-    ],
+    expect: () => [SearchTvLoading(), const SearchTvError('Server Failure')],
     verify: (bloc) {
       verify(() => mockSearchTvSeries.execute(tQuery)).called(1);
     },
@@ -80,8 +74,6 @@ void main() {
     },
     act: (bloc) => bloc.add(const OnTvQueryChanged('')),
     wait: const Duration(milliseconds: 500),
-    expect: () => [
-      SearchTvEmpty(),
-    ],
+    expect: () => [SearchTvEmpty()],
   );
 }

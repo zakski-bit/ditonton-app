@@ -13,8 +13,9 @@ void main() {
 
   setUp(() {
     mockGetTopRatedMovies = MockGetTopRatedMovies();
-    topRatedMoviesBloc =
-        TopRatedMoviesBloc(getTopRatedMovies: mockGetTopRatedMovies);
+    topRatedMoviesBloc = TopRatedMoviesBloc(
+      getTopRatedMovies: mockGetTopRatedMovies,
+    );
   });
 
   final tMovie = Movie(
@@ -46,10 +47,7 @@ void main() {
       return topRatedMoviesBloc;
     },
     act: (bloc) => bloc.add(FetchTopRatedMovies()),
-    expect: () => [
-      TopRatedMoviesLoading(),
-      TopRatedMoviesLoaded(tMovieList),
-    ],
+    expect: () => [TopRatedMoviesLoading(), TopRatedMoviesLoaded(tMovieList)],
     verify: (bloc) {
       verify(() => mockGetTopRatedMovies.execute()).called(1);
     },

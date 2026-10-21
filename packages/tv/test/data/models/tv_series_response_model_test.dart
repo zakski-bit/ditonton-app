@@ -26,8 +26,9 @@ void main() {
   group('fromJson', () {
     test('should return a valid model from JSON', () async {
       // arrange
-      final Map<String, dynamic> jsonMap =
-          json.decode(readJson('dummy_data/on_the_air.json'));
+      final Map<String, dynamic> jsonMap = json.decode(
+        readJson('dummy_data/on_the_air.json'),
+      );
       // act
       final result = TvResponse.fromJson(jsonMap);
       // assert
@@ -54,8 +55,8 @@ void main() {
             "first_air_date": "2020-05-05",
             "name": "Name",
             "vote_average": 1.0,
-            "vote_count": 1
-          }
+            "vote_count": 1,
+          },
         ],
       };
       expect(result, expectedJsonMap);

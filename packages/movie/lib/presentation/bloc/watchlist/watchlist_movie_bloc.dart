@@ -1,5 +1,6 @@
 import 'package:core/core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../domain/usecases/get_watchlist_movies.dart';
 import '../../../domain/usecases/get_watchlist_status.dart';
 import '../../../domain/usecases/remove_watchlist.dart';
@@ -24,14 +25,18 @@ class WatchlistMovieBloc
       emit(state.copyWith(watchlistState: RequestState.Loading));
       final result = await getWatchlistMovies.execute();
       result.fold(
-        (failure) => emit(state.copyWith(
-          watchlistState: RequestState.Error,
-          message: failure.message,
-        )),
-        (movies) => emit(state.copyWith(
-          watchlistState: RequestState.Loaded,
-          watchlistMovies: movies,
-        )),
+        (failure) => emit(
+          state.copyWith(
+            watchlistState: RequestState.Error,
+            message: failure.message,
+          ),
+        ),
+        (movies) => emit(
+          state.copyWith(
+            watchlistState: RequestState.Loaded,
+            watchlistMovies: movies,
+          ),
+        ),
       );
     });
 
@@ -44,10 +49,12 @@ class WatchlistMovieBloc
       final result = await saveWatchlist.execute(event.movie);
       result.fold(
         (failure) => emit(state.copyWith(watchlistMessage: failure.message)),
-        (successMessage) => emit(state.copyWith(
-          watchlistMessage: successMessage,
-          isAddedToWatchlist: true,
-        )),
+        (successMessage) => emit(
+          state.copyWith(
+            watchlistMessage: successMessage,
+            isAddedToWatchlist: true,
+          ),
+        ),
       );
     });
 
@@ -55,10 +62,12 @@ class WatchlistMovieBloc
       final result = await removeWatchlist.execute(event.movie);
       result.fold(
         (failure) => emit(state.copyWith(watchlistMessage: failure.message)),
-        (successMessage) => emit(state.copyWith(
-          watchlistMessage: successMessage,
-          isAddedToWatchlist: false,
-        )),
+        (successMessage) => emit(
+          state.copyWith(
+            watchlistMessage: successMessage,
+            isAddedToWatchlist: false,
+          ),
+        ),
       );
     });
   }

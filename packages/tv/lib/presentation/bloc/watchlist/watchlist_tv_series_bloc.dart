@@ -1,5 +1,6 @@
 import 'package:core/core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../domain/usecases/get_watchlist_status_tv.dart';
 import '../../../domain/usecases/get_watchlist_tv_series.dart';
 import '../../../domain/usecases/remove_watchlist_tv.dart';
@@ -24,14 +25,18 @@ class WatchlistTvSeriesBloc
       emit(state.copyWith(watchlistState: RequestState.Loading));
       final result = await getWatchlistTvSeries.execute();
       result.fold(
-        (failure) => emit(state.copyWith(
-          watchlistState: RequestState.Error,
-          message: failure.message,
-        )),
-        (tvSeries) => emit(state.copyWith(
-          watchlistState: RequestState.Loaded,
-          watchlistTvSeries: tvSeries,
-        )),
+        (failure) => emit(
+          state.copyWith(
+            watchlistState: RequestState.Error,
+            message: failure.message,
+          ),
+        ),
+        (tvSeries) => emit(
+          state.copyWith(
+            watchlistState: RequestState.Loaded,
+            watchlistTvSeries: tvSeries,
+          ),
+        ),
       );
     });
 
@@ -44,10 +49,12 @@ class WatchlistTvSeriesBloc
       final result = await saveWatchlistTv.execute(event.tvSeries);
       result.fold(
         (failure) => emit(state.copyWith(watchlistMessage: failure.message)),
-        (successMessage) => emit(state.copyWith(
-          watchlistMessage: successMessage,
-          isAddedToWatchlist: true,
-        )),
+        (successMessage) => emit(
+          state.copyWith(
+            watchlistMessage: successMessage,
+            isAddedToWatchlist: true,
+          ),
+        ),
       );
     });
 
@@ -55,10 +62,12 @@ class WatchlistTvSeriesBloc
       final result = await removeWatchlistTv.execute(event.tvSeries);
       result.fold(
         (failure) => emit(state.copyWith(watchlistMessage: failure.message)),
-        (successMessage) => emit(state.copyWith(
-          watchlistMessage: successMessage,
-          isAddedToWatchlist: false,
-        )),
+        (successMessage) => emit(
+          state.copyWith(
+            watchlistMessage: successMessage,
+            isAddedToWatchlist: false,
+          ),
+        ),
       );
     });
   }

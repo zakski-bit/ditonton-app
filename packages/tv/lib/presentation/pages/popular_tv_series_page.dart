@@ -8,7 +8,8 @@ import '../bloc/popular/popular_tv_series_state.dart';
 import '../widgets/tv_series_card_list.dart';
 
 class PopularTvSeriesPage extends StatefulWidget {
-  static const ROUTE_NAME = POPULAR_TV_ROUTE;
+  static const routeName = popularTvRoute;
+  static const ROUTE_NAME = routeName;
 
   const PopularTvSeriesPage({Key? key}) : super(key: key);
 
@@ -30,17 +31,13 @@ class _PopularTvSeriesPageState extends State<PopularTvSeriesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Popular TV Series'),
-      ),
+      appBar: AppBar(title: const Text('Popular TV Series')),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: BlocBuilder<PopularTvSeriesBloc, PopularTvSeriesState>(
           builder: (context, state) {
             if (state is PopularTvSeriesLoading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
+              return const Center(child: CircularProgressIndicator());
             } else if (state is PopularTvSeriesLoaded) {
               return ListView.builder(
                 itemBuilder: (context, index) {

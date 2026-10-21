@@ -2,7 +2,8 @@ import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 
 class AboutPage extends StatelessWidget {
-  static const ROUTE_NAME = '/about';
+  static const routeName = '/about';
+  static const ROUTE_NAME = routeName;
 
   @override
   Widget build(BuildContext context) {
@@ -13,19 +14,16 @@ class AboutPage extends StatelessWidget {
             children: [
               Expanded(
                 child: Container(
-                  color: kPrussianBlue,
+                  color: prussianBlue,
                   child: Center(
-                    child: Image.asset(
-                      'assets/circle-g.png',
-                      width: 128,
-                    ),
+                    child: Image.asset('assets/circle-g.png', width: 128),
                   ),
                 ),
               ),
               Expanded(
                 child: Container(
                   padding: const EdgeInsets.all(32.0),
-                  color: kMikadoYellow,
+                  color: mikadoYellow,
                   child: Text(
                     'Ditonton merupakan sebuah aplikasi katalog film yang dikembangkan oleh Dicoding Indonesia sebagai contoh proyek aplikasi untuk kelas Menjadi Flutter Developer Expert.',
                     style: TextStyle(color: Colors.black87, fontSize: 16),
@@ -40,7 +38,7 @@ class AboutPage extends StatelessWidget {
               onPressed: () => Navigator.pop(context),
               icon: Icon(Icons.arrow_back),
             ),
-          )
+          ),
         ],
       ),
     );

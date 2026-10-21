@@ -13,8 +13,9 @@ void main() {
 
   setUp(() {
     mockGetPopularMovies = MockGetPopularMovies();
-    popularMoviesBloc =
-        PopularMoviesBloc(getPopularMovies: mockGetPopularMovies);
+    popularMoviesBloc = PopularMoviesBloc(
+      getPopularMovies: mockGetPopularMovies,
+    );
   });
 
   final tMovie = Movie(
@@ -46,10 +47,7 @@ void main() {
       return popularMoviesBloc;
     },
     act: (bloc) => bloc.add(FetchPopularMovies()),
-    expect: () => [
-      PopularMoviesLoading(),
-      PopularMoviesLoaded(tMovieList),
-    ],
+    expect: () => [PopularMoviesLoading(), PopularMoviesLoaded(tMovieList)],
     verify: (bloc) {
       verify(() => mockGetPopularMovies.execute()).called(1);
     },

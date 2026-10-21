@@ -1,13 +1,15 @@
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../bloc/popular/popular_movies_bloc.dart';
 import '../bloc/popular/popular_movies_event.dart';
 import '../bloc/popular/popular_movies_state.dart';
 import '../widgets/movie_card_list.dart';
 
 class PopularMoviesPage extends StatefulWidget {
-  static const ROUTE_NAME = POPULAR_MOVIES_ROUTE;
+  static const routeName = popularMoviesRoute;
+  static const ROUTE_NAME = routeName;
 
   const PopularMoviesPage({Key? key}) : super(key: key);
 
@@ -19,24 +21,21 @@ class _PopularMoviesPageState extends State<PopularMoviesPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() =>
-        context.read<PopularMoviesBloc>().add(FetchPopularMovies()));
+    Future.microtask(
+      () => context.read<PopularMoviesBloc>().add(FetchPopularMovies()),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Popular Movies'),
-      ),
+      appBar: AppBar(title: Text('Popular Movies')),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: BlocBuilder<PopularMoviesBloc, PopularMoviesState>(
           builder: (context, state) {
             if (state is PopularMoviesLoading) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
+              return Center(child: CircularProgressIndicator());
             } else if (state is PopularMoviesLoaded) {
               return ListView.builder(
                 itemBuilder: (context, index) {

@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:core/core.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:movie/movie.dart';
@@ -46,8 +47,9 @@ void main() {
   );
 
   test('should return a valid model from JSON', () async {
-    final Map<String, dynamic> jsonMap =
-        json.decode(readJson('dummy_data/movie_detail.json'));
+    final Map<String, dynamic> jsonMap = json.decode(
+      readJson('dummy_data/movie_detail.json'),
+    );
     final result = MovieDetailResponse.fromJson(jsonMap);
     expect(result, isNotNull);
   });
@@ -59,7 +61,7 @@ void main() {
       "backdrop_path": '/path.jpg',
       "budget": 100,
       "genres": [
-        {"id": 1, "name": "Action"}
+        {"id": 1, "name": "Action"},
       ],
       "homepage": 'https://google.com',
       "id": 1,
@@ -77,7 +79,7 @@ void main() {
       "title": 'Title',
       "video": false,
       "vote_average": 1.0,
-      "vote_count": 1
+      "vote_count": 1,
     };
     expect(result, expectedJsonMap);
   });

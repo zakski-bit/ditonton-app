@@ -19,39 +19,39 @@ class SeasonModel extends Equatable {
   final int episodeCount;
 
   factory SeasonModel.fromJson(Map<String, dynamic> json) => SeasonModel(
-        id: json['id'],
-        name: json['name'] ?? '',
-        overview: json['overview'] ?? '',
-        posterPath: json['poster_path'],
-        seasonNumber: json['season_number'] ?? 0,
-        episodeCount: json['episode_count'] ?? 0,
-      );
+    id: json['id'],
+    name: json['name'] ?? '',
+    overview: json['overview'] ?? '',
+    posterPath: json['poster_path'],
+    seasonNumber: json['season_number'] ?? 0,
+    episodeCount: json['episode_count'] ?? 0,
+  );
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'overview': overview,
-        'poster_path': posterPath,
-        'season_number': seasonNumber,
-        'episode_count': episodeCount,
-      };
+    'id': id,
+    'name': name,
+    'overview': overview,
+    'poster_path': posterPath,
+    'season_number': seasonNumber,
+    'episode_count': episodeCount,
+  };
 
   Season toEntity() => Season(
-        id: id,
-        name: name,
-        overview: overview,
-        posterPath: posterPath,
-        seasonNumber: seasonNumber,
-        episodeCount: episodeCount,
-      );
+    id: id,
+    name: name,
+    overview: overview,
+    posterPath: posterPath,
+    seasonNumber: seasonNumber,
+    episodeCount: episodeCount,
+  );
 
   @override
   List<Object?> get props => [
-        id,
-        name,
-        overview,
-        posterPath,
-        seasonNumber,
-        episodeCount,
-      ];
+    id,
+    name,
+    overview,
+    posterPath,
+    seasonNumber,
+    episodeCount,
+  ];
 }
