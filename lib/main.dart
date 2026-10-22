@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:about/about.dart';
 import 'package:core/core.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ void main() async {
 
   NavigatorObserver? analyticsObserver;
   try {
+    await Firebase.initializeApp();
     final originalOnError = FlutterError.onError;
     FlutterError.onError = (errorDetails) {
       FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
@@ -51,7 +53,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   final NavigatorObserver? analyticsObserver;
 
-  const MyApp({Key? key, this.analyticsObserver}) : super(key: key);
+  const MyApp({super.key, this.analyticsObserver});
 
   @override
   Widget build(BuildContext context) {
@@ -66,16 +68,16 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => di.locator<WatchlistMovieBloc>()),
 
         // TV Series BLoCs
-        BlocProvider(create: (_) => di.locator<OnTheAirTvSeriesBloc>()),
-        BlocProvider(create: (_) => di.locator<PopularTvSeriesBloc>()),
-        BlocProvider(create: (_) => di.locator<TopRatedTvSeriesBloc>()),
-        BlocProvider(create: (_) => di.locator<TvSeriesDetailBloc>()),
-        BlocProvider(create: (_) => di.locator<TvSeriesRecommendationsBloc>()),
-        BlocProvider(create: (_) => di.locator<WatchlistTvSeriesBloc>()),
+        BlocProvider(create: (_) => di.locator<OnTheAirTVSeriesBloc>()),
+        BlocProvider(create: (_) => di.locator<PopularTVSeriesBloc>()),
+        BlocProvider(create: (_) => di.locator<TopRatedTVSeriesBloc>()),
+        BlocProvider(create: (_) => di.locator<TVSeriesDetailBloc>()),
+        BlocProvider(create: (_) => di.locator<TVSeriesRecommendationsBloc>()),
+        BlocProvider(create: (_) => di.locator<WatchlistTVSeriesBloc>()),
 
         // Search BLoCs
         BlocProvider(create: (_) => di.locator<MovieSearchBloc>()),
-        BlocProvider(create: (_) => di.locator<TvSearchBloc>()),
+        BlocProvider(create: (_) => di.locator<TVSearchBloc>()),
       ],
       child: MaterialApp(
         title: 'Ditonton',
@@ -86,7 +88,7 @@ class MyApp extends StatelessWidget {
           textTheme: textTheme,
           drawerTheme: drawerTheme,
         ),
-        home: HomeMoviePage(),
+        home: const HomeMoviePage(),
         navigatorObservers: [
           routeObserver,
           if (analyticsObserver != null) analyticsObserver!,
@@ -94,7 +96,7 @@ class MyApp extends StatelessWidget {
         onGenerateRoute: (RouteSettings settings) {
           switch (settings.name) {
             case homeMovieRoute:
-              return MaterialPageRoute(builder: (_) => HomeMoviePage());
+              return MaterialPageRoute(builder: (_) => const HomeMoviePage());
             case popularMoviesRoute:
               return CupertinoPageRoute(
                 builder: (_) => const PopularMoviesPage(),
@@ -114,34 +116,34 @@ class MyApp extends StatelessWidget {
             case watchlistRoute:
               return MaterialPageRoute(builder: (_) => const WatchlistPage());
             case aboutRoute:
-              return MaterialPageRoute(builder: (_) => AboutPage());
+              return MaterialPageRoute(builder: (_) => const AboutPage());
 
             // TV Series Routes
             case homeTvRoute:
               return MaterialPageRoute(
-                builder: (_) => const HomeTvSeriesPage(),
+                builder: (_) => const HomeTVSeriesPage(),
               );
             case onTheAirTvRoute:
               return CupertinoPageRoute(
-                builder: (_) => const OnTheAirTvSeriesPage(),
+                builder: (_) => const OnTheAirTVSeriesPage(),
               );
             case popularTvRoute:
               return CupertinoPageRoute(
-                builder: (_) => const PopularTvSeriesPage(),
+                builder: (_) => const PopularTVSeriesPage(),
               );
             case topRatedTvRoute:
               return CupertinoPageRoute(
-                builder: (_) => const TopRatedTvSeriesPage(),
+                builder: (_) => const TopRatedTVSeriesPage(),
               );
             case tvDetailRoute:
               final id = settings.arguments as int;
               return MaterialPageRoute(
-                builder: (_) => TvSeriesDetailPage(id: id),
+                builder: (_) => TVSeriesDetailPage(id: id),
                 settings: settings,
               );
             case searchTvRoute:
               return CupertinoPageRoute(
-                builder: (_) => const SearchTvSeriesPage(),
+                builder: (_) => const SearchTVSeriesPage(),
               );
 
             default:

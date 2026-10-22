@@ -2,12 +2,14 @@ import 'package:dartz/dartz.dart';
 import 'package:core/core.dart';
 import 'package:tv/domain/repositories/tv_repository.dart';
 
-class GetTopRatedTvSeries {
-  final TvRepository repository;
+class GetTopRatedTVSeries {
+  final TVRepository repository;
 
-  GetTopRatedTvSeries(this.repository);
+  GetTopRatedTVSeries(this.repository);
 
-  Future<Either<Failure, List<TvSeries>>> execute() {
+  Future<Either<Failure, List<TVSeries>>> execute() {
     return repository.getTopRatedTvSeries();
   }
 }
+
+typedef GetTopRatedTvSeries = GetTopRatedTVSeries;

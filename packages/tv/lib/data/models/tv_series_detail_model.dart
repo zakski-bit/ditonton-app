@@ -1,8 +1,8 @@
 import 'package:core/core.dart';
 import 'package:equatable/equatable.dart';
 
-class TvDetailResponse extends Equatable {
-  const TvDetailResponse({
+class TVDetailResponse extends Equatable {
+  const TVDetailResponse({
     required this.adult,
     required this.backdropPath,
     required this.genres,
@@ -36,8 +36,8 @@ class TvDetailResponse extends Equatable {
   final int numberOfSeasons;
   final List<SeasonModel> seasons;
 
-  factory TvDetailResponse.fromJson(Map<String, dynamic> json) =>
-      TvDetailResponse(
+  factory TVDetailResponse.fromJson(Map<String, dynamic> json) =>
+      TVDetailResponse(
         adult: json["adult"] ?? false,
         backdropPath: json["backdrop_path"],
         genres: json["genres"] != null
@@ -81,8 +81,8 @@ class TvDetailResponse extends Equatable {
     "seasons": List<dynamic>.from(seasons.map((x) => x.toJson())),
   };
 
-  TvSeriesDetail toEntity() {
-    return TvSeriesDetail(
+  TVSeriesDetail toEntity() {
+    return TVSeriesDetail(
       adult: adult,
       backdropPath: backdropPath,
       genres: genres.map((genre) => genre.toEntity()).toList(),
@@ -119,3 +119,5 @@ class TvDetailResponse extends Equatable {
     seasons,
   ];
 }
+
+typedef TvDetailResponse = TVDetailResponse;

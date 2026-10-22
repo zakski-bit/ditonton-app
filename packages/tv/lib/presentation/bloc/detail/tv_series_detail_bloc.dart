@@ -4,19 +4,21 @@ import '../../../domain/usecases/get_tv_series_detail.dart';
 import 'tv_series_detail_event.dart';
 import 'tv_series_detail_state.dart';
 
-class TvSeriesDetailBloc
-    extends Bloc<TvSeriesDetailEvent, TvSeriesDetailState> {
-  final GetTvSeriesDetail getTvSeriesDetail;
+class TVSeriesDetailBloc
+    extends Bloc<TvSeriesDetailEvent, TVSeriesDetailState> {
+  final GetTVSeriesDetail getTvSeriesDetail;
 
-  TvSeriesDetailBloc({required this.getTvSeriesDetail})
-    : super(TvSeriesDetailEmpty()) {
+  TVSeriesDetailBloc({required this.getTvSeriesDetail})
+    : super(TVSeriesDetailEmpty()) {
     on<FetchTvSeriesDetail>((event, emit) async {
-      emit(TvSeriesDetailLoading());
+      emit(TVSeriesDetailLoading());
       final result = await getTvSeriesDetail.execute(event.id);
       result.fold(
-        (failure) => emit(TvSeriesDetailError(failure.message)),
-        (data) => emit(TvSeriesDetailLoaded(data)),
+        (failure) => emit(TVSeriesDetailError(failure.message)),
+        (data) => emit(TVSeriesDetailLoaded(data)),
       );
     });
   }
 }
+
+typedef TvSeriesDetailBloc = TVSeriesDetailBloc;

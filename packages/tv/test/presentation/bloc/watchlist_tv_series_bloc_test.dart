@@ -51,9 +51,9 @@ void main() {
       },
       act: (bloc) => bloc.add(FetchWatchlistTvSeries()),
       expect: () => [
-        const WatchlistTvSeriesState(watchlistState: RequestState.Loading),
+        const WatchlistTvSeriesState(watchlistState: RequestState.loading),
         WatchlistTvSeriesState(
-          watchlistState: RequestState.Loaded,
+          watchlistState: RequestState.loaded,
           watchlistTvSeries: testTvList,
         ),
       ],
@@ -71,9 +71,9 @@ void main() {
       },
       act: (bloc) => bloc.add(FetchWatchlistTvSeries()),
       expect: () => [
-        const WatchlistTvSeriesState(watchlistState: RequestState.Loading),
+        const WatchlistTvSeriesState(watchlistState: RequestState.loading),
         const WatchlistTvSeriesState(
-          watchlistState: RequestState.Error,
+          watchlistState: RequestState.error,
           message: 'Database Failure',
         ),
       ],

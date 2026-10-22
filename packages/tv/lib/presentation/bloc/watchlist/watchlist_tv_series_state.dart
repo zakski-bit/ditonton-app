@@ -1,32 +1,32 @@
 import 'package:core/core.dart';
 import 'package:equatable/equatable.dart';
 
-class WatchlistTvSeriesState extends Equatable {
+class WatchlistTVSeriesState extends Equatable {
   static const watchlistAddSuccessMessage = 'Added to Watchlist';
   static const watchlistRemoveSuccessMessage = 'Removed from Watchlist';
 
-  final List<TvSeries> watchlistTvSeries;
+  final List<TVSeries> watchlistTvSeries;
   final RequestState watchlistState;
   final String message;
   final bool isAddedToWatchlist;
   final String watchlistMessage;
 
-  const WatchlistTvSeriesState({
+  const WatchlistTVSeriesState({
     this.watchlistTvSeries = const [],
-    this.watchlistState = RequestState.Empty,
+    this.watchlistState = RequestState.empty,
     this.message = '',
     this.isAddedToWatchlist = false,
     this.watchlistMessage = '',
   });
 
-  WatchlistTvSeriesState copyWith({
-    List<TvSeries>? watchlistTvSeries,
+  WatchlistTVSeriesState copyWith({
+    List<TVSeries>? watchlistTvSeries,
     RequestState? watchlistState,
     String? message,
     bool? isAddedToWatchlist,
     String? watchlistMessage,
   }) {
-    return WatchlistTvSeriesState(
+    return WatchlistTVSeriesState(
       watchlistTvSeries: watchlistTvSeries ?? this.watchlistTvSeries,
       watchlistState: watchlistState ?? this.watchlistState,
       message: message ?? this.message,
@@ -44,3 +44,5 @@ class WatchlistTvSeriesState extends Equatable {
     watchlistMessage,
   ];
 }
+
+typedef WatchlistTvSeriesState = WatchlistTVSeriesState;

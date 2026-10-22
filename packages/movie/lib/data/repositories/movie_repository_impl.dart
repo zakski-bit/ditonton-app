@@ -98,7 +98,7 @@ class MovieRepositoryImpl implements MovieRepository {
     } on DatabaseException catch (e) {
       return Left(DatabaseFailure(e.message));
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 

@@ -13,7 +13,7 @@ class WatchlistMovieState extends Equatable {
 
   const WatchlistMovieState({
     this.watchlistMovies = const [],
-    this.watchlistState = RequestState.Empty,
+    this.watchlistState = RequestState.empty,
     this.message = '',
     this.isAddedToWatchlist = false,
     this.watchlistMessage = '',

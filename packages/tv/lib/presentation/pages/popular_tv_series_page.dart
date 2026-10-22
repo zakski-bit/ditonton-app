@@ -7,23 +7,22 @@ import '../bloc/popular/popular_tv_series_event.dart';
 import '../bloc/popular/popular_tv_series_state.dart';
 import '../widgets/tv_series_card_list.dart';
 
-class PopularTvSeriesPage extends StatefulWidget {
+class PopularTVSeriesPage extends StatefulWidget {
   static const routeName = popularTvRoute;
-  static const ROUTE_NAME = routeName;
 
-  const PopularTvSeriesPage({Key? key}) : super(key: key);
+  const PopularTVSeriesPage({super.key});
 
   @override
-  _PopularTvSeriesPageState createState() => _PopularTvSeriesPageState();
+  State<PopularTVSeriesPage> createState() => _PopularTVSeriesPageState();
 }
 
-class _PopularTvSeriesPageState extends State<PopularTvSeriesPage> {
+class _PopularTVSeriesPageState extends State<PopularTVSeriesPage> {
   @override
   void initState() {
     super.initState();
     Future.microtask(() {
       if (mounted) {
-        context.read<PopularTvSeriesBloc>().add(FetchPopularTvSeries());
+        context.read<PopularTVSeriesBloc>().add(FetchPopularTvSeries());
       }
     });
   }
@@ -34,19 +33,19 @@ class _PopularTvSeriesPageState extends State<PopularTvSeriesPage> {
       appBar: AppBar(title: const Text('Popular TV Series')),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: BlocBuilder<PopularTvSeriesBloc, PopularTvSeriesState>(
+        child: BlocBuilder<PopularTVSeriesBloc, PopularTVSeriesState>(
           builder: (context, state) {
-            if (state is PopularTvSeriesLoading) {
+            if (state is PopularTVSeriesLoading) {
               return const Center(child: CircularProgressIndicator());
-            } else if (state is PopularTvSeriesLoaded) {
+            } else if (state is PopularTVSeriesLoaded) {
               return ListView.builder(
                 itemBuilder: (context, index) {
                   final tv = state.tvSeries[index];
-                  return TvSeriesCard(tv);
+                  return TVSeriesCard(tv);
                 },
                 itemCount: state.tvSeries.length,
               );
-            } else if (state is PopularTvSeriesError) {
+            } else if (state is PopularTVSeriesError) {
               return Center(
                 key: const Key('error_message'),
                 child: Text(state.message),
@@ -60,3 +59,5 @@ class _PopularTvSeriesPageState extends State<PopularTvSeriesPage> {
     );
   }
 }
+
+typedef PopularTvSeriesPage = PopularTVSeriesPage;

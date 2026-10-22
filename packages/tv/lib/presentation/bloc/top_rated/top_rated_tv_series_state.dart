@@ -1,31 +1,37 @@
 import 'package:core/core.dart';
 import 'package:equatable/equatable.dart';
 
-abstract class TopRatedTvSeriesState extends Equatable {
-  const TopRatedTvSeriesState();
+abstract class TopRatedTVSeriesState extends Equatable {
+  const TopRatedTVSeriesState();
 
   @override
   List<Object?> get props => [];
 }
 
-class TopRatedTvSeriesEmpty extends TopRatedTvSeriesState {}
+class TopRatedTVSeriesEmpty extends TopRatedTVSeriesState {}
 
-class TopRatedTvSeriesLoading extends TopRatedTvSeriesState {}
+class TopRatedTVSeriesLoading extends TopRatedTVSeriesState {}
 
-class TopRatedTvSeriesLoaded extends TopRatedTvSeriesState {
-  final List<TvSeries> tvSeries;
+class TopRatedTVSeriesLoaded extends TopRatedTVSeriesState {
+  final List<TVSeries> tvSeries;
 
-  const TopRatedTvSeriesLoaded(this.tvSeries);
+  const TopRatedTVSeriesLoaded(this.tvSeries);
 
   @override
   List<Object?> get props => [tvSeries];
 }
 
-class TopRatedTvSeriesError extends TopRatedTvSeriesState {
+class TopRatedTVSeriesError extends TopRatedTVSeriesState {
   final String message;
 
-  const TopRatedTvSeriesError(this.message);
+  const TopRatedTVSeriesError(this.message);
 
   @override
   List<Object?> get props => [message];
 }
+
+typedef TopRatedTvSeriesState = TopRatedTVSeriesState;
+typedef TopRatedTvSeriesEmpty = TopRatedTVSeriesEmpty;
+typedef TopRatedTvSeriesLoading = TopRatedTVSeriesLoading;
+typedef TopRatedTvSeriesLoaded = TopRatedTVSeriesLoaded;
+typedef TopRatedTvSeriesError = TopRatedTVSeriesError;

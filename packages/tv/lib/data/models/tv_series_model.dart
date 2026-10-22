@@ -1,8 +1,8 @@
 import 'package:core/core.dart';
 import 'package:equatable/equatable.dart';
 
-class TvModel extends Equatable {
-  const TvModel({
+class TVModel extends Equatable {
+  const TVModel({
     required this.adult,
     required this.backdropPath,
     required this.genreIds,
@@ -30,7 +30,7 @@ class TvModel extends Equatable {
   final double voteAverage;
   final int voteCount;
 
-  factory TvModel.fromJson(Map<String, dynamic> json) => TvModel(
+  factory TVModel.fromJson(Map<String, dynamic> json) => TVModel(
     adult: json["adult"],
     backdropPath: json["backdrop_path"],
     genreIds: json["genre_ids"] != null
@@ -62,8 +62,8 @@ class TvModel extends Equatable {
     "vote_count": voteCount,
   };
 
-  TvSeries toEntity() {
-    return TvSeries(
+  TVSeries toEntity() {
+    return TVSeries(
       adult: adult,
       backdropPath: backdropPath,
       genreIds: genreIds,
@@ -95,3 +95,5 @@ class TvModel extends Equatable {
     voteCount,
   ];
 }
+
+typedef TvModel = TVModel;

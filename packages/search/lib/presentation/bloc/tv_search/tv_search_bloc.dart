@@ -5,23 +5,25 @@ import '../event_transformer.dart';
 import 'tv_search_event.dart';
 import 'tv_search_state.dart';
 
-class TvSearchBloc extends Bloc<TvSearchEvent, TvSearchState> {
-  final SearchTvSeries searchTvSeries;
+class TVSearchBloc extends Bloc<TVSearchEvent, TVSearchState> {
+  final SearchTVSeries searchTvSeries;
 
-  TvSearchBloc({required this.searchTvSeries}) : super(SearchTvEmpty()) {
-    on<OnTvQueryChanged>((event, emit) async {
+  TVSearchBloc({required this.searchTvSeries}) : super(SearchTVEmpty()) {
+    on<OnTVQueryChanged>((event, emit) async {
       final query = event.query;
       if (query.isEmpty) {
-        emit(SearchTvEmpty());
+        emit(SearchTVEmpty());
         return;
       }
 
-      emit(SearchTvLoading());
+      emit(SearchTVLoading());
       final result = await searchTvSeries.execute(query);
       result.fold(
-        (failure) => emit(SearchTvError(failure.message)),
-        (data) => emit(SearchTvLoaded(data)),
+        (failure) => emit(SearchTVError(failure.message)),
+        (data) => emit(SearchTVLoaded(data)),
       );
     }, transformer: debounce(const Duration(milliseconds: 500)));
   }
 }
+
+typedef TvSearchBloc = TVSearchBloc;

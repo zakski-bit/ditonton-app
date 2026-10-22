@@ -17,17 +17,16 @@ import 'popular_tv_series_page.dart';
 import 'top_rated_tv_series_page.dart';
 import 'tv_series_detail_page.dart';
 
-class HomeTvSeriesPage extends StatefulWidget {
+class HomeTVSeriesPage extends StatefulWidget {
   static const routeName = homeTvRoute;
-  static const ROUTE_NAME = routeName;
 
-  const HomeTvSeriesPage({Key? key}) : super(key: key);
+  const HomeTVSeriesPage({super.key});
 
   @override
-  _HomeTvSeriesPageState createState() => _HomeTvSeriesPageState();
+  State<HomeTVSeriesPage> createState() => _HomeTVSeriesPageState();
 }
 
-class _HomeTvSeriesPageState extends State<HomeTvSeriesPage> {
+class _HomeTVSeriesPageState extends State<HomeTVSeriesPage> {
   @override
   void initState() {
     super.initState();
@@ -181,10 +180,10 @@ class _HomeTvSeriesPageState extends State<HomeTvSeriesPage> {
   }
 }
 
-class TvSeriesList extends StatelessWidget {
-  final List<TvSeries> tvSeries;
+class TVSeriesList extends StatelessWidget {
+  final List<TVSeries> tvSeries;
 
-  const TvSeriesList(this.tvSeries, {Key? key}) : super(key: key);
+  const TVSeriesList(this.tvSeries, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -200,7 +199,7 @@ class TvSeriesList extends StatelessWidget {
               onTap: () {
                 Navigator.pushNamed(
                   context,
-                  TvSeriesDetailPage.routeName,
+                  TVSeriesDetailPage.routeName,
                   arguments: tv.id,
                 );
               },
@@ -221,3 +220,6 @@ class TvSeriesList extends StatelessWidget {
     );
   }
 }
+
+typedef HomeTvSeriesPage = HomeTVSeriesPage;
+typedef TvSeriesList = TVSeriesList;

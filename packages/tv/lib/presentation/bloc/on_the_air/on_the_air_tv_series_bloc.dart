@@ -4,19 +4,21 @@ import '../../../domain/usecases/get_on_the_air_tv_series.dart';
 import 'on_the_air_tv_series_event.dart';
 import 'on_the_air_tv_series_state.dart';
 
-class OnTheAirTvSeriesBloc
-    extends Bloc<OnTheAirTvSeriesEvent, OnTheAirTvSeriesState> {
-  final GetOnTheAirTvSeries getOnTheAirTvSeries;
+class OnTheAirTVSeriesBloc
+    extends Bloc<OnTheAirTvSeriesEvent, OnTheAirTVSeriesState> {
+  final GetOnTheAirTVSeries getOnTheAirTvSeries;
 
-  OnTheAirTvSeriesBloc({required this.getOnTheAirTvSeries})
-    : super(OnTheAirTvSeriesEmpty()) {
+  OnTheAirTVSeriesBloc({required this.getOnTheAirTvSeries})
+    : super(OnTheAirTVSeriesEmpty()) {
     on<FetchOnTheAirTvSeries>((event, emit) async {
-      emit(OnTheAirTvSeriesLoading());
+      emit(OnTheAirTVSeriesLoading());
       final result = await getOnTheAirTvSeries.execute();
       result.fold(
-        (failure) => emit(OnTheAirTvSeriesError(failure.message)),
-        (data) => emit(OnTheAirTvSeriesLoaded(data)),
+        (failure) => emit(OnTheAirTVSeriesError(failure.message)),
+        (data) => emit(OnTheAirTVSeriesLoaded(data)),
       );
     });
   }
 }
+
+typedef OnTheAirTvSeriesBloc = OnTheAirTVSeriesBloc;

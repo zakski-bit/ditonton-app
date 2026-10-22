@@ -8,32 +8,32 @@ import '../../../domain/usecases/save_watchlist_tv.dart';
 import 'watchlist_tv_series_event.dart';
 import 'watchlist_tv_series_state.dart';
 
-class WatchlistTvSeriesBloc
-    extends Bloc<WatchlistTvSeriesEvent, WatchlistTvSeriesState> {
-  final GetWatchlistTvSeries getWatchlistTvSeries;
-  final GetWatchlistStatusTv getWatchListStatusTv;
-  final SaveWatchlistTv saveWatchlistTv;
-  final RemoveWatchlistTv removeWatchlistTv;
+class WatchlistTVSeriesBloc
+    extends Bloc<WatchlistTvSeriesEvent, WatchlistTVSeriesState> {
+  final GetWatchlistTVSeries getWatchlistTvSeries;
+  final GetWatchlistStatusTV getWatchListStatusTv;
+  final SaveWatchlistTV saveWatchlistTv;
+  final RemoveWatchlistTV removeWatchlistTv;
 
-  WatchlistTvSeriesBloc({
+  WatchlistTVSeriesBloc({
     required this.getWatchlistTvSeries,
     required this.getWatchListStatusTv,
     required this.saveWatchlistTv,
     required this.removeWatchlistTv,
-  }) : super(const WatchlistTvSeriesState()) {
+  }) : super(const WatchlistTVSeriesState()) {
     on<FetchWatchlistTvSeries>((event, emit) async {
-      emit(state.copyWith(watchlistState: RequestState.Loading));
+      emit(state.copyWith(watchlistState: RequestState.loading));
       final result = await getWatchlistTvSeries.execute();
       result.fold(
         (failure) => emit(
           state.copyWith(
-            watchlistState: RequestState.Error,
+            watchlistState: RequestState.error,
             message: failure.message,
           ),
         ),
         (tvSeries) => emit(
           state.copyWith(
-            watchlistState: RequestState.Loaded,
+            watchlistState: RequestState.loaded,
             watchlistTvSeries: tvSeries,
           ),
         ),
@@ -72,3 +72,5 @@ class WatchlistTvSeriesBloc
     });
   }
 }
+
+typedef WatchlistTvSeriesBloc = WatchlistTVSeriesBloc;

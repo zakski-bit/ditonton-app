@@ -12,24 +12,24 @@ class MockWatchlistMovieBloc
     extends MockBloc<WatchlistMovieEvent, WatchlistMovieState>
     implements WatchlistMovieBloc {}
 
-class MockWatchlistTvSeriesBloc
-    extends MockBloc<WatchlistTvSeriesEvent, WatchlistTvSeriesState>
-    implements WatchlistTvSeriesBloc {}
+class MockWatchlistTVSeriesBloc
+    extends MockBloc<WatchlistTvSeriesEvent, WatchlistTVSeriesState>
+    implements WatchlistTVSeriesBloc {}
 
 void main() {
   late MockWatchlistMovieBloc mockWatchlistMovieBloc;
-  late MockWatchlistTvSeriesBloc mockWatchlistTvSeriesBloc;
+  late MockWatchlistTVSeriesBloc mockWatchlistTvSeriesBloc;
 
   setUp(() {
     mockWatchlistMovieBloc = MockWatchlistMovieBloc();
-    mockWatchlistTvSeriesBloc = MockWatchlistTvSeriesBloc();
+    mockWatchlistTvSeriesBloc = MockWatchlistTVSeriesBloc();
   });
 
   Widget makeTestableWidget(Widget body) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<WatchlistMovieBloc>.value(value: mockWatchlistMovieBloc),
-        BlocProvider<WatchlistTvSeriesBloc>.value(
+        BlocProvider<WatchlistTVSeriesBloc>.value(
           value: mockWatchlistTvSeriesBloc,
         ),
       ],
@@ -43,7 +43,8 @@ void main() {
     genreIds: const [14, 28],
     id: 557,
     originalTitle: 'Spider-Man',
-    overview: 'After being bitten by a genetically altered spider, nerdy high school student Peter Parker is endowed with amazing powers to become the Amazing superhero known as Spider-Man.',
+    overview:
+        'After being bitten by a genetically altered spider, nerdy high school student Peter Parker is endowed with amazing powers to become the Amazing superhero known as Spider-Man.',
     popularity: 60.441,
     posterPath: '/rweIrveL43TaxUN0akQEaAXL6x0.jpg',
     releaseDate: '2002-05-01',
@@ -53,13 +54,14 @@ void main() {
     voteCount: 13507,
   );
 
-  final tTvSeries = TvSeries(
+  const tTvSeries = TVSeries(
     adult: false,
     backdropPath: '/muth4OYamXf41G2evdrLEg8d3om.jpg',
-    genreIds: const [14, 28],
+    genreIds: [14, 28],
     id: 1,
     originalName: 'Game of Thrones',
-    overview: 'Seven noble families fight for control of the mythical land of Westeros.',
+    overview:
+        'Seven noble families fight for control of the mythical land of Westeros.',
     popularity: 60.441,
     posterPath: '/rweIrveL43TaxUN0akQEaAXL6x0.jpg',
     firstAirDate: '2011-04-17',
@@ -72,10 +74,10 @@ void main() {
     WidgetTester tester,
   ) async {
     when(() => mockWatchlistMovieBloc.state).thenReturn(
-      const WatchlistMovieState(watchlistState: RequestState.Loading),
+      const WatchlistMovieState(watchlistState: RequestState.loading),
     );
     when(() => mockWatchlistTvSeriesBloc.state).thenReturn(
-      const WatchlistTvSeriesState(watchlistState: RequestState.Empty),
+      const WatchlistTVSeriesState(watchlistState: RequestState.empty),
     );
 
     final progressBarFinder = find.byType(CircularProgressIndicator);
@@ -90,12 +92,12 @@ void main() {
     (WidgetTester tester) async {
       when(() => mockWatchlistMovieBloc.state).thenReturn(
         WatchlistMovieState(
-          watchlistState: RequestState.Loaded,
+          watchlistState: RequestState.loaded,
           watchlistMovies: [tMovie],
         ),
       );
       when(() => mockWatchlistTvSeriesBloc.state).thenReturn(
-        const WatchlistTvSeriesState(watchlistState: RequestState.Empty),
+        const WatchlistTVSeriesState(watchlistState: RequestState.empty),
       );
 
       final listViewFinder = find.byType(ListView);
@@ -113,12 +115,12 @@ void main() {
   ) async {
     when(() => mockWatchlistMovieBloc.state).thenReturn(
       const WatchlistMovieState(
-        watchlistState: RequestState.Error,
+        watchlistState: RequestState.error,
         message: 'Error message',
       ),
     );
     when(() => mockWatchlistTvSeriesBloc.state).thenReturn(
-      const WatchlistTvSeriesState(watchlistState: RequestState.Empty),
+      const WatchlistTVSeriesState(watchlistState: RequestState.empty),
     );
 
     final textFinder = find.byKey(const Key('error_message'));
@@ -129,14 +131,14 @@ void main() {
   });
 
   testWidgets(
-    'Page should display ListView and TvSeriesCard when TV series loaded',
+    'Page should display ListView and TVSeriesCard when TV series loaded',
     (WidgetTester tester) async {
       when(() => mockWatchlistMovieBloc.state).thenReturn(
-        const WatchlistMovieState(watchlistState: RequestState.Empty),
+        const WatchlistMovieState(watchlistState: RequestState.empty),
       );
       when(() => mockWatchlistTvSeriesBloc.state).thenReturn(
-        WatchlistTvSeriesState(
-          watchlistState: RequestState.Loaded,
+        const WatchlistTVSeriesState(
+          watchlistState: RequestState.loaded,
           watchlistTvSeries: [tTvSeries],
         ),
       );
@@ -149,7 +151,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 300));
 
       final listViewFinder = find.byType(ListView);
-      final tvCardFinder = find.byType(TvSeriesCard);
+      final tvCardFinder = find.byType(TVSeriesCard);
 
       expect(listViewFinder, findsOneWidget);
       expect(tvCardFinder, findsOneWidget);
@@ -161,10 +163,10 @@ void main() {
   ) async {
     when(
       () => mockWatchlistMovieBloc.state,
-    ).thenReturn(const WatchlistMovieState(watchlistState: RequestState.Empty));
+    ).thenReturn(const WatchlistMovieState(watchlistState: RequestState.empty));
     when(() => mockWatchlistTvSeriesBloc.state).thenReturn(
-      const WatchlistTvSeriesState(
-        watchlistState: RequestState.Error,
+      const WatchlistTVSeriesState(
+        watchlistState: RequestState.error,
         message: 'Error message TV',
       ),
     );

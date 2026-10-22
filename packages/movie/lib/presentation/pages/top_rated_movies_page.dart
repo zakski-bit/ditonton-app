@@ -9,33 +9,33 @@ import '../widgets/movie_card_list.dart';
 
 class TopRatedMoviesPage extends StatefulWidget {
   static const routeName = topRatedMoviesRoute;
-  static const ROUTE_NAME = routeName;
 
-  const TopRatedMoviesPage({Key? key}) : super(key: key);
+  const TopRatedMoviesPage({super.key});
 
   @override
-  _TopRatedMoviesPageState createState() => _TopRatedMoviesPageState();
+  State<TopRatedMoviesPage> createState() => _TopRatedMoviesPageState();
 }
 
 class _TopRatedMoviesPageState extends State<TopRatedMoviesPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(
-      () => context.read<TopRatedMoviesBloc>().add(FetchTopRatedMovies()),
-    );
+    Future.microtask(() {
+      if (!mounted) return;
+      context.read<TopRatedMoviesBloc>().add(FetchTopRatedMovies());
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Top Rated Movies')),
+      appBar: AppBar(title: const Text('Top Rated Movies')),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: BlocBuilder<TopRatedMoviesBloc, TopRatedMoviesState>(
           builder: (context, state) {
             if (state is TopRatedMoviesLoading) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             } else if (state is TopRatedMoviesLoaded) {
               return ListView.builder(
                 itemBuilder: (context, index) {
@@ -46,11 +46,11 @@ class _TopRatedMoviesPageState extends State<TopRatedMoviesPage> {
               );
             } else if (state is TopRatedMoviesError) {
               return Center(
-                key: Key('error_message'),
+                key: const Key('error_message'),
                 child: Text(state.message),
               );
             } else {
-              return Container();
+              return const SizedBox();
             }
           },
         ),

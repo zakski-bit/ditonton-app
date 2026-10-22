@@ -22,18 +22,18 @@ class WatchlistMovieBloc
     required this.removeWatchlist,
   }) : super(const WatchlistMovieState()) {
     on<FetchWatchlistMovies>((event, emit) async {
-      emit(state.copyWith(watchlistState: RequestState.Loading));
+      emit(state.copyWith(watchlistState: RequestState.loading));
       final result = await getWatchlistMovies.execute();
       result.fold(
         (failure) => emit(
           state.copyWith(
-            watchlistState: RequestState.Error,
+            watchlistState: RequestState.error,
             message: failure.message,
           ),
         ),
         (movies) => emit(
           state.copyWith(
-            watchlistState: RequestState.Loaded,
+            watchlistState: RequestState.loaded,
             watchlistMovies: movies,
           ),
         ),

@@ -7,11 +7,11 @@ import '../datasources/tv_local_data_source.dart';
 import '../datasources/tv_remote_data_source.dart';
 import '../../domain/repositories/tv_repository.dart';
 
-class TvRepositoryImpl implements TvRepository {
-  final TvRemoteDataSource remoteDataSource;
-  final TvLocalDataSource localDataSource;
+class TVRepositoryImpl implements TVRepository {
+  final TVRemoteDataSource remoteDataSource;
+  final TVLocalDataSource localDataSource;
 
-  TvRepositoryImpl({
+  TVRepositoryImpl({
     required this.remoteDataSource,
     required this.localDataSource,
   });
@@ -91,24 +91,24 @@ class TvRepositoryImpl implements TvRepository {
   }
 
   @override
-  Future<Either<Failure, String>> saveWatchlist(TvSeriesDetail tv) async {
+  Future<Either<Failure, String>> saveWatchlist(TVSeriesDetail tv) async {
     try {
       final result = await localDataSource.insertWatchlist(
-        TvTable.fromEntity(tv),
+        TVTable.fromEntity(tv),
       );
       return Right(result);
     } on DatabaseException catch (e) {
       return Left(DatabaseFailure(e.message));
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
   @override
-  Future<Either<Failure, String>> removeWatchlist(TvSeriesDetail tv) async {
+  Future<Either<Failure, String>> removeWatchlist(TVSeriesDetail tv) async {
     try {
       final result = await localDataSource.removeWatchlist(
-        TvTable.fromEntity(tv),
+        TVTable.fromEntity(tv),
       );
       return Right(result);
     } on DatabaseException catch (e) {
@@ -123,8 +123,10 @@ class TvRepositoryImpl implements TvRepository {
   }
 
   @override
-  Future<Either<Failure, List<TvSeries>>> getWatchlistTvSeries() async {
+  Future<Either<Failure, List<TVSeries>>> getWatchlistTvSeries() async {
     final result = await localDataSource.getWatchlistTv();
     return Right(result.map((data) => data.toEntity()).toList());
   }
 }
+
+typedef TvRepositoryImpl = TVRepositoryImpl;

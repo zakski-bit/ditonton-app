@@ -31,22 +31,22 @@ void init() {
 
   // BLoC - TV Series
   locator.registerFactory(
-    () => OnTheAirTvSeriesBloc(getOnTheAirTvSeries: locator()),
+    () => OnTheAirTVSeriesBloc(getOnTheAirTvSeries: locator()),
   );
   locator.registerFactory(
-    () => PopularTvSeriesBloc(getPopularTvSeries: locator()),
+    () => PopularTVSeriesBloc(getPopularTvSeries: locator()),
   );
   locator.registerFactory(
-    () => TopRatedTvSeriesBloc(getTopRatedTvSeries: locator()),
+    () => TopRatedTVSeriesBloc(getTopRatedTvSeries: locator()),
   );
   locator.registerFactory(
-    () => TvSeriesDetailBloc(getTvSeriesDetail: locator()),
+    () => TVSeriesDetailBloc(getTvSeriesDetail: locator()),
   );
   locator.registerFactory(
-    () => TvSeriesRecommendationsBloc(getTvSeriesRecommendations: locator()),
+    () => TVSeriesRecommendationsBloc(getTvSeriesRecommendations: locator()),
   );
   locator.registerFactory(
-    () => WatchlistTvSeriesBloc(
+    () => WatchlistTVSeriesBloc(
       getWatchlistTvSeries: locator(),
       getWatchListStatusTv: locator(),
       saveWatchlistTv: locator(),
@@ -56,7 +56,7 @@ void init() {
 
   // BLoC - Search
   locator.registerFactory(() => MovieSearchBloc(searchMovies: locator()));
-  locator.registerFactory(() => TvSearchBloc(searchTvSeries: locator()));
+  locator.registerFactory(() => TVSearchBloc(searchTvSeries: locator()));
 
   // Use cases - Movie
   locator.registerLazySingleton(() => GetNowPlayingMovies(locator()));
@@ -70,19 +70,19 @@ void init() {
   locator.registerLazySingleton(() => GetWatchlistMovies(locator()));
 
   // Use cases - TV Series
-  locator.registerLazySingleton(() => GetOnTheAirTvSeries(locator()));
-  locator.registerLazySingleton(() => GetPopularTvSeries(locator()));
-  locator.registerLazySingleton(() => GetTopRatedTvSeries(locator()));
-  locator.registerLazySingleton(() => GetTvSeriesDetail(locator()));
-  locator.registerLazySingleton(() => GetTvSeriesRecommendations(locator()));
-  locator.registerLazySingleton(() => GetWatchlistStatusTv(locator()));
-  locator.registerLazySingleton(() => SaveWatchlistTv(locator()));
-  locator.registerLazySingleton(() => RemoveWatchlistTv(locator()));
-  locator.registerLazySingleton(() => GetWatchlistTvSeries(locator()));
+  locator.registerLazySingleton(() => GetOnTheAirTVSeries(locator()));
+  locator.registerLazySingleton(() => GetPopularTVSeries(locator()));
+  locator.registerLazySingleton(() => GetTopRatedTVSeries(locator()));
+  locator.registerLazySingleton(() => GetTVSeriesDetail(locator()));
+  locator.registerLazySingleton(() => GetTVSeriesRecommendations(locator()));
+  locator.registerLazySingleton(() => GetWatchlistStatusTV(locator()));
+  locator.registerLazySingleton(() => SaveWatchlistTV(locator()));
+  locator.registerLazySingleton(() => RemoveWatchlistTV(locator()));
+  locator.registerLazySingleton(() => GetWatchlistTVSeries(locator()));
 
   // Use cases - Search
   locator.registerLazySingleton(() => SearchMovies(locator()));
-  locator.registerLazySingleton(() => SearchTvSeries(locator()));
+  locator.registerLazySingleton(() => SearchTVSeries(locator()));
 
   // Repositories
   locator.registerLazySingleton<MovieRepository>(
@@ -91,8 +91,8 @@ void init() {
       localDataSource: locator(),
     ),
   );
-  locator.registerLazySingleton<TvRepository>(
-    () => TvRepositoryImpl(
+  locator.registerLazySingleton<TVRepository>(
+    () => TVRepositoryImpl(
       remoteDataSource: locator(),
       localDataSource: locator(),
     ),
@@ -105,11 +105,11 @@ void init() {
   locator.registerLazySingleton<MovieLocalDataSource>(
     () => MovieLocalDataSourceImpl(databaseHelper: locator()),
   );
-  locator.registerLazySingleton<TvRemoteDataSource>(
-    () => TvRemoteDataSourceImpl(client: locator()),
+  locator.registerLazySingleton<TVRemoteDataSource>(
+    () => TVRemoteDataSourceImpl(client: locator()),
   );
-  locator.registerLazySingleton<TvLocalDataSource>(
-    () => TvLocalDataSourceImpl(databaseHelper: locator()),
+  locator.registerLazySingleton<TVLocalDataSource>(
+    () => TVLocalDataSourceImpl(databaseHelper: locator()),
   );
 
   // Helper

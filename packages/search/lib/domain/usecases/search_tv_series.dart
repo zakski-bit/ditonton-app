@@ -2,12 +2,14 @@ import 'package:core/core.dart';
 import 'package:dartz/dartz.dart';
 import 'package:tv/tv.dart';
 
-class SearchTvSeries {
-  final TvRepository repository;
+class SearchTVSeries {
+  final TVRepository repository;
 
-  SearchTvSeries(this.repository);
+  SearchTVSeries(this.repository);
 
-  Future<Either<Failure, List<TvSeries>>> execute(String query) {
+  Future<Either<Failure, List<TVSeries>>> execute(String query) {
     return repository.searchTvSeries(query);
   }
 }
+
+typedef SearchTvSeries = SearchTVSeries;

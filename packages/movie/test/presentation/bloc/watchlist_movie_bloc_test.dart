@@ -51,9 +51,9 @@ void main() {
       },
       act: (bloc) => bloc.add(FetchWatchlistMovies()),
       expect: () => [
-        const WatchlistMovieState(watchlistState: RequestState.Loading),
+        const WatchlistMovieState(watchlistState: RequestState.loading),
         WatchlistMovieState(
-          watchlistState: RequestState.Loaded,
+          watchlistState: RequestState.loaded,
           watchlistMovies: testMovieList,
         ),
       ],
@@ -71,9 +71,9 @@ void main() {
       },
       act: (bloc) => bloc.add(FetchWatchlistMovies()),
       expect: () => [
-        const WatchlistMovieState(watchlistState: RequestState.Loading),
+        const WatchlistMovieState(watchlistState: RequestState.loading),
         const WatchlistMovieState(
-          watchlistState: RequestState.Error,
+          watchlistState: RequestState.error,
           message: 'Database Failure',
         ),
       ],

@@ -1,31 +1,37 @@
 import 'package:core/core.dart';
 import 'package:equatable/equatable.dart';
 
-abstract class PopularTvSeriesState extends Equatable {
-  const PopularTvSeriesState();
+abstract class PopularTVSeriesState extends Equatable {
+  const PopularTVSeriesState();
 
   @override
   List<Object?> get props => [];
 }
 
-class PopularTvSeriesEmpty extends PopularTvSeriesState {}
+class PopularTVSeriesEmpty extends PopularTVSeriesState {}
 
-class PopularTvSeriesLoading extends PopularTvSeriesState {}
+class PopularTVSeriesLoading extends PopularTVSeriesState {}
 
-class PopularTvSeriesLoaded extends PopularTvSeriesState {
-  final List<TvSeries> tvSeries;
+class PopularTVSeriesLoaded extends PopularTVSeriesState {
+  final List<TVSeries> tvSeries;
 
-  const PopularTvSeriesLoaded(this.tvSeries);
+  const PopularTVSeriesLoaded(this.tvSeries);
 
   @override
   List<Object?> get props => [tvSeries];
 }
 
-class PopularTvSeriesError extends PopularTvSeriesState {
+class PopularTVSeriesError extends PopularTVSeriesState {
   final String message;
 
-  const PopularTvSeriesError(this.message);
+  const PopularTVSeriesError(this.message);
 
   @override
   List<Object?> get props => [message];
 }
+
+typedef PopularTvSeriesState = PopularTVSeriesState;
+typedef PopularTvSeriesEmpty = PopularTVSeriesEmpty;
+typedef PopularTvSeriesLoading = PopularTVSeriesLoading;
+typedef PopularTvSeriesLoaded = PopularTVSeriesLoaded;
+typedef PopularTvSeriesError = PopularTVSeriesError;

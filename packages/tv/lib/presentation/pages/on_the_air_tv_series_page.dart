@@ -7,23 +7,22 @@ import '../bloc/on_the_air/on_the_air_tv_series_event.dart';
 import '../bloc/on_the_air/on_the_air_tv_series_state.dart';
 import '../widgets/tv_series_card_list.dart';
 
-class OnTheAirTvSeriesPage extends StatefulWidget {
+class OnTheAirTVSeriesPage extends StatefulWidget {
   static const routeName = onTheAirTvRoute;
-  static const ROUTE_NAME = routeName;
 
-  const OnTheAirTvSeriesPage({Key? key}) : super(key: key);
+  const OnTheAirTVSeriesPage({super.key});
 
   @override
-  _OnTheAirTvSeriesPageState createState() => _OnTheAirTvSeriesPageState();
+  State<OnTheAirTVSeriesPage> createState() => _OnTheAirTVSeriesPageState();
 }
 
-class _OnTheAirTvSeriesPageState extends State<OnTheAirTvSeriesPage> {
+class _OnTheAirTVSeriesPageState extends State<OnTheAirTVSeriesPage> {
   @override
   void initState() {
     super.initState();
     Future.microtask(() {
       if (mounted) {
-        context.read<OnTheAirTvSeriesBloc>().add(FetchOnTheAirTvSeries());
+        context.read<OnTheAirTVSeriesBloc>().add(FetchOnTheAirTvSeries());
       }
     });
   }
@@ -34,19 +33,19 @@ class _OnTheAirTvSeriesPageState extends State<OnTheAirTvSeriesPage> {
       appBar: AppBar(title: const Text('On The Air TV Series')),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: BlocBuilder<OnTheAirTvSeriesBloc, OnTheAirTvSeriesState>(
+        child: BlocBuilder<OnTheAirTVSeriesBloc, OnTheAirTVSeriesState>(
           builder: (context, state) {
-            if (state is OnTheAirTvSeriesLoading) {
+            if (state is OnTheAirTVSeriesLoading) {
               return const Center(child: CircularProgressIndicator());
-            } else if (state is OnTheAirTvSeriesLoaded) {
+            } else if (state is OnTheAirTVSeriesLoaded) {
               return ListView.builder(
                 itemBuilder: (context, index) {
                   final tv = state.tvSeries[index];
-                  return TvSeriesCard(tv);
+                  return TVSeriesCard(tv);
                 },
                 itemCount: state.tvSeries.length,
               );
-            } else if (state is OnTheAirTvSeriesError) {
+            } else if (state is OnTheAirTVSeriesError) {
               return Center(
                 key: const Key('error_message'),
                 child: Text(state.message),
@@ -60,3 +59,5 @@ class _OnTheAirTvSeriesPageState extends State<OnTheAirTvSeriesPage> {
     );
   }
 }
+
+typedef OnTheAirTvSeriesPage = OnTheAirTVSeriesPage;

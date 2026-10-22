@@ -7,23 +7,22 @@ import '../bloc/top_rated/top_rated_tv_series_event.dart';
 import '../bloc/top_rated/top_rated_tv_series_state.dart';
 import '../widgets/tv_series_card_list.dart';
 
-class TopRatedTvSeriesPage extends StatefulWidget {
+class TopRatedTVSeriesPage extends StatefulWidget {
   static const routeName = topRatedTvRoute;
-  static const ROUTE_NAME = routeName;
 
-  const TopRatedTvSeriesPage({Key? key}) : super(key: key);
+  const TopRatedTVSeriesPage({super.key});
 
   @override
-  _TopRatedTvSeriesPageState createState() => _TopRatedTvSeriesPageState();
+  State<TopRatedTVSeriesPage> createState() => _TopRatedTVSeriesPageState();
 }
 
-class _TopRatedTvSeriesPageState extends State<TopRatedTvSeriesPage> {
+class _TopRatedTVSeriesPageState extends State<TopRatedTVSeriesPage> {
   @override
   void initState() {
     super.initState();
     Future.microtask(() {
       if (mounted) {
-        context.read<TopRatedTvSeriesBloc>().add(FetchTopRatedTvSeries());
+        context.read<TopRatedTVSeriesBloc>().add(FetchTopRatedTvSeries());
       }
     });
   }
@@ -34,19 +33,19 @@ class _TopRatedTvSeriesPageState extends State<TopRatedTvSeriesPage> {
       appBar: AppBar(title: const Text('Top Rated TV Series')),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: BlocBuilder<TopRatedTvSeriesBloc, TopRatedTvSeriesState>(
+        child: BlocBuilder<TopRatedTVSeriesBloc, TopRatedTVSeriesState>(
           builder: (context, state) {
-            if (state is TopRatedTvSeriesLoading) {
+            if (state is TopRatedTVSeriesLoading) {
               return const Center(child: CircularProgressIndicator());
-            } else if (state is TopRatedTvSeriesLoaded) {
+            } else if (state is TopRatedTVSeriesLoaded) {
               return ListView.builder(
                 itemBuilder: (context, index) {
                   final tv = state.tvSeries[index];
-                  return TvSeriesCard(tv);
+                  return TVSeriesCard(tv);
                 },
                 itemCount: state.tvSeries.length,
               );
-            } else if (state is TopRatedTvSeriesError) {
+            } else if (state is TopRatedTVSeriesError) {
               return Center(
                 key: const Key('error_message'),
                 child: Text(state.message),
@@ -60,3 +59,5 @@ class _TopRatedTvSeriesPageState extends State<TopRatedTvSeriesPage> {
     );
   }
 }
+
+typedef TopRatedTvSeriesPage = TopRatedTVSeriesPage;

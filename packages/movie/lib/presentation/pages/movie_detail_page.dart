@@ -16,10 +16,9 @@ import '../bloc/watchlist/watchlist_movie_state.dart';
 
 class MovieDetailPage extends StatefulWidget {
   static const routeName = movieDetailRoute;
-  static const ROUTE_NAME = routeName;
 
   final int id;
-  const MovieDetailPage({Key? key, required this.id}) : super(key: key);
+  const MovieDetailPage({super.key, required this.id});
 
   @override
   State<MovieDetailPage> createState() => _MovieDetailPageState();
@@ -68,7 +67,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
 class DetailContent extends StatelessWidget {
   final MovieDetail movie;
 
-  const DetailContent(this.movie, {Key? key}) : super(key: key);
+  const DetailContent(this.movie, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -144,37 +143,8 @@ class DetailContent extends StatelessWidget {
                                       scrollDirection: Axis.horizontal,
                                       itemBuilder: (context, index) {
                                         final recMovie = recommendations[index];
-                                        return Padding(
-                                          padding: const EdgeInsets.all(4.0),
-                                          child: InkWell(
-                                            onTap: () {
-                                              Navigator.pushReplacementNamed(
-                                                context,
-                                                MovieDetailPage.routeName,
-                                                arguments: recMovie.id,
-                                              );
-                                            },
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                    Radius.circular(8),
-                                                  ),
-                                              child: CachedNetworkImage(
-                                                imageUrl:
-                                                    '$baseImageUrl${recMovie.posterPath}',
-                                                placeholder: (context, url) =>
-                                                    const Center(
-                                                      child:
-                                                          CircularProgressIndicator(),
-                                                    ),
-                                                errorWidget: (
-                                                  context,
-                                                  url,
-                                                  error,
-                                                ) => const Icon(Icons.error),
-                                              ),
-                                            ),
-                                          ),
+                                        return _MovieRecommendationCard(
+                                          movie: recMovie,
                                         );
                                       },
                                       itemCount: recommendations.length,
@@ -299,6 +269,37 @@ class _MovieWatchlistButton extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class _MovieRecommendationCard extends StatelessWidget {
+  final Movie movie;
+
+  const _MovieRecommendationCard({required this.movie});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: InkWell(
+        onTap: () {
+          Navigator.pushReplacementNamed(
+            context,
+            MovieDetailPage.routeName,
+            arguments: movie.id,
+          );
+        },
+        child: ClipRRect(
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          child: CachedNetworkImage(
+            imageUrl: '$baseImageUrl${movie.posterPath}',
+            placeholder: (context, url) =>
+                const Center(child: CircularProgressIndicator()),
+            errorWidget: (context, url, error) => const Icon(Icons.error),
+          ),
+        ),
+      ),
     );
   }
 }

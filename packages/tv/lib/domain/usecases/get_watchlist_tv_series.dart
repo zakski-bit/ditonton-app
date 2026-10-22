@@ -2,12 +2,14 @@ import 'package:dartz/dartz.dart';
 import 'package:core/core.dart';
 import 'package:tv/domain/repositories/tv_repository.dart';
 
-class GetWatchlistTvSeries {
-  final TvRepository repository;
+class GetWatchlistTVSeries {
+  final TVRepository repository;
 
-  GetWatchlistTvSeries(this.repository);
+  GetWatchlistTVSeries(this.repository);
 
-  Future<Either<Failure, List<TvSeries>>> execute() {
+  Future<Either<Failure, List<TVSeries>>> execute() {
     return repository.getWatchlistTvSeries();
   }
 }
+
+typedef GetWatchlistTvSeries = GetWatchlistTVSeries;

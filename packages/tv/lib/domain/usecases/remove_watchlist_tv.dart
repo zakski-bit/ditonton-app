@@ -2,12 +2,14 @@ import 'package:dartz/dartz.dart';
 import 'package:core/core.dart';
 import 'package:tv/domain/repositories/tv_repository.dart';
 
-class RemoveWatchlistTv {
-  final TvRepository repository;
+class RemoveWatchlistTV {
+  final TVRepository repository;
 
-  RemoveWatchlistTv(this.repository);
+  RemoveWatchlistTV(this.repository);
 
-  Future<Either<Failure, String>> execute(TvSeriesDetail tv) {
+  Future<Either<Failure, String>> execute(TVSeriesDetail tv) {
     return repository.removeWatchlist(tv);
   }
 }
+
+typedef RemoveWatchlistTv = RemoveWatchlistTV;

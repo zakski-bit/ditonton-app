@@ -1,31 +1,37 @@
 import 'package:core/core.dart';
 import 'package:equatable/equatable.dart';
 
-abstract class TvSeriesRecommendationsState extends Equatable {
-  const TvSeriesRecommendationsState();
+abstract class TVSeriesRecommendationsState extends Equatable {
+  const TVSeriesRecommendationsState();
 
   @override
   List<Object?> get props => [];
 }
 
-class TvSeriesRecommendationsEmpty extends TvSeriesRecommendationsState {}
+class TVSeriesRecommendationsEmpty extends TVSeriesRecommendationsState {}
 
-class TvSeriesRecommendationsLoading extends TvSeriesRecommendationsState {}
+class TVSeriesRecommendationsLoading extends TVSeriesRecommendationsState {}
 
-class TvSeriesRecommendationsLoaded extends TvSeriesRecommendationsState {
-  final List<TvSeries> tvSeries;
+class TVSeriesRecommendationsLoaded extends TVSeriesRecommendationsState {
+  final List<TVSeries> tvSeries;
 
-  const TvSeriesRecommendationsLoaded(this.tvSeries);
+  const TVSeriesRecommendationsLoaded(this.tvSeries);
 
   @override
   List<Object?> get props => [tvSeries];
 }
 
-class TvSeriesRecommendationsError extends TvSeriesRecommendationsState {
+class TVSeriesRecommendationsError extends TVSeriesRecommendationsState {
   final String message;
 
-  const TvSeriesRecommendationsError(this.message);
+  const TVSeriesRecommendationsError(this.message);
 
   @override
   List<Object?> get props => [message];
 }
+
+typedef TvSeriesRecommendationsState = TVSeriesRecommendationsState;
+typedef TvSeriesRecommendationsEmpty = TVSeriesRecommendationsEmpty;
+typedef TvSeriesRecommendationsLoading = TVSeriesRecommendationsLoading;
+typedef TvSeriesRecommendationsLoaded = TVSeriesRecommendationsLoaded;
+typedef TvSeriesRecommendationsError = TVSeriesRecommendationsError;

@@ -6,9 +6,8 @@ import 'package:tv/tv.dart';
 
 class WatchlistPage extends StatefulWidget {
   static const routeName = watchlistRoute;
-  static const ROUTE_NAME = routeName;
 
-  const WatchlistPage({Key? key}) : super(key: key);
+  const WatchlistPage({super.key});
 
   @override
   State<WatchlistPage> createState() => _WatchlistPageState();
@@ -19,8 +18,9 @@ class _WatchlistPageState extends State<WatchlistPage> with RouteAware {
   void initState() {
     super.initState();
     Future.microtask(() {
+      if (!mounted) return;
       context.read<WatchlistMovieBloc>().add(FetchWatchlistMovies());
-      context.read<WatchlistTvSeriesBloc>().add(FetchWatchlistTvSeries());
+      context.read<WatchlistTVSeriesBloc>().add(FetchWatchlistTvSeries());
     });
   }
 
@@ -33,7 +33,7 @@ class _WatchlistPageState extends State<WatchlistPage> with RouteAware {
   @override
   void didPopNext() {
     context.read<WatchlistMovieBloc>().add(FetchWatchlistMovies());
-    context.read<WatchlistTvSeriesBloc>().add(FetchWatchlistTvSeries());
+    context.read<WatchlistTVSeriesBloc>().add(FetchWatchlistTvSeries());
   }
 
   @override
@@ -57,9 +57,9 @@ class _WatchlistPageState extends State<WatchlistPage> with RouteAware {
               padding: const EdgeInsets.all(8.0),
               child: BlocBuilder<WatchlistMovieBloc, WatchlistMovieState>(
                 builder: (context, state) {
-                  if (state.watchlistState == RequestState.Loading) {
+                  if (state.watchlistState == RequestState.loading) {
                     return const Center(child: CircularProgressIndicator());
-                  } else if (state.watchlistState == RequestState.Loaded) {
+                  } else if (state.watchlistState == RequestState.loaded) {
                     return ListView.builder(
                       itemBuilder: (context, index) {
                         final movie = state.watchlistMovies[index];
@@ -67,7 +67,7 @@ class _WatchlistPageState extends State<WatchlistPage> with RouteAware {
                       },
                       itemCount: state.watchlistMovies.length,
                     );
-                  } else if (state.watchlistState == RequestState.Error) {
+                  } else if (state.watchlistState == RequestState.error) {
                     return Center(
                       key: const Key('error_message'),
                       child: Text(state.message),
@@ -80,19 +80,19 @@ class _WatchlistPageState extends State<WatchlistPage> with RouteAware {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: BlocBuilder<WatchlistTvSeriesBloc, WatchlistTvSeriesState>(
+              child: BlocBuilder<WatchlistTVSeriesBloc, WatchlistTVSeriesState>(
                 builder: (context, state) {
-                  if (state.watchlistState == RequestState.Loading) {
+                  if (state.watchlistState == RequestState.loading) {
                     return const Center(child: CircularProgressIndicator());
-                  } else if (state.watchlistState == RequestState.Loaded) {
+                  } else if (state.watchlistState == RequestState.loaded) {
                     return ListView.builder(
                       itemBuilder: (context, index) {
                         final tv = state.watchlistTvSeries[index];
-                        return TvSeriesCard(tv);
+                        return TVSeriesCard(tv);
                       },
                       itemCount: state.watchlistTvSeries.length,
                     );
-                  } else if (state.watchlistState == RequestState.Error) {
+                  } else if (state.watchlistState == RequestState.error) {
                     return Center(
                       key: const Key('error_message_tv'),
                       child: Text(state.message),

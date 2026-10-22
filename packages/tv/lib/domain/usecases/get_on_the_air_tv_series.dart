@@ -2,12 +2,14 @@ import 'package:dartz/dartz.dart';
 import 'package:core/core.dart';
 import 'package:tv/domain/repositories/tv_repository.dart';
 
-class GetOnTheAirTvSeries {
-  final TvRepository repository;
+class GetOnTheAirTVSeries {
+  final TVRepository repository;
 
-  GetOnTheAirTvSeries(this.repository);
+  GetOnTheAirTVSeries(this.repository);
 
-  Future<Either<Failure, List<TvSeries>>> execute() {
+  Future<Either<Failure, List<TVSeries>>> execute() {
     return repository.getOnTheAirTvSeries();
   }
 }
+
+typedef GetOnTheAirTvSeries = GetOnTheAirTVSeries;

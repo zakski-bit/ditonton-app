@@ -7,11 +7,10 @@ import '../bloc/tv_search/tv_search_bloc.dart';
 import '../bloc/tv_search/tv_search_event.dart';
 import '../bloc/tv_search/tv_search_state.dart';
 
-class SearchTvSeriesPage extends StatelessWidget {
+class SearchTVSeriesPage extends StatelessWidget {
   static const routeName = searchTvRoute;
-  static const ROUTE_NAME = routeName;
 
-  const SearchTvSeriesPage({Key? key}) : super(key: key);
+  const SearchTVSeriesPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +23,10 @@ class SearchTvSeriesPage extends StatelessWidget {
           children: [
             TextField(
               onChanged: (query) {
-                context.read<TvSearchBloc>().add(OnTvQueryChanged(query));
+                context.read<TVSearchBloc>().add(OnTVQueryChanged(query));
               },
               onSubmitted: (query) {
-                context.read<TvSearchBloc>().add(OnTvQueryChanged(query));
+                context.read<TVSearchBloc>().add(OnTVQueryChanged(query));
               },
               decoration: const InputDecoration(
                 hintText: 'Search title',
@@ -41,29 +40,29 @@ class SearchTvSeriesPage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text('Search Result', style: heading6),
-            BlocBuilder<TvSearchBloc, TvSearchState>(
+            BlocBuilder<TVSearchBloc, TVSearchState>(
               builder: (context, state) {
-                if (state is SearchTvLoading) {
+                if (state is SearchTVLoading) {
                   return const Center(child: CircularProgressIndicator());
-                } else if (state is SearchTvLoaded) {
+                } else if (state is SearchTVLoaded) {
                   final result = state.result;
                   return Expanded(
                     child: ListView.builder(
                       padding: const EdgeInsets.all(8),
                       itemBuilder: (context, index) {
                         final tv = result[index];
-                        return TvSeriesCard(tv);
+                        return TVSeriesCard(tv);
                       },
                       itemCount: result.length,
                     ),
                   );
-                } else if (state is SearchTvError) {
+                } else if (state is SearchTVError) {
                   return Center(
                     key: const Key('error_message'),
                     child: Text(state.message),
                   );
                 } else {
-                  return Expanded(child: Container());
+                  return const Expanded(child: SizedBox());
                 }
               },
             ),
@@ -73,3 +72,5 @@ class SearchTvSeriesPage extends StatelessWidget {
     );
   }
 }
+
+typedef SearchTvSeriesPage = SearchTVSeriesPage;

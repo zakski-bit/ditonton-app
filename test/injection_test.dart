@@ -27,26 +27,26 @@ void main() {
     });
 
     test('should resolve TV Series BLoCs successfully', () {
-      expect(di.locator<OnTheAirTvSeriesBloc>(), isNotNull);
-      expect(di.locator<PopularTvSeriesBloc>(), isNotNull);
-      expect(di.locator<TopRatedTvSeriesBloc>(), isNotNull);
-      expect(di.locator<TvSeriesDetailBloc>(), isNotNull);
-      expect(di.locator<TvSeriesRecommendationsBloc>(), isNotNull);
-      expect(di.locator<WatchlistTvSeriesBloc>(), isNotNull);
+      expect(di.locator<OnTheAirTVSeriesBloc>(), isNotNull);
+      expect(di.locator<PopularTVSeriesBloc>(), isNotNull);
+      expect(di.locator<TopRatedTVSeriesBloc>(), isNotNull);
+      expect(di.locator<TVSeriesDetailBloc>(), isNotNull);
+      expect(di.locator<TVSeriesRecommendationsBloc>(), isNotNull);
+      expect(di.locator<WatchlistTVSeriesBloc>(), isNotNull);
     });
 
     test('should resolve Search BLoCs successfully', () {
       expect(di.locator<MovieSearchBloc>(), isNotNull);
-      expect(di.locator<TvSearchBloc>(), isNotNull);
+      expect(di.locator<TVSearchBloc>(), isNotNull);
     });
 
     test('should resolve Repositories and Data Sources successfully', () {
       expect(di.locator<MovieRepository>(), isNotNull);
-      expect(di.locator<TvRepository>(), isNotNull);
+      expect(di.locator<TVRepository>(), isNotNull);
       expect(di.locator<MovieRemoteDataSource>(), isNotNull);
       expect(di.locator<MovieLocalDataSource>(), isNotNull);
-      expect(di.locator<TvRemoteDataSource>(), isNotNull);
-      expect(di.locator<TvLocalDataSource>(), isNotNull);
+      expect(di.locator<TVRemoteDataSource>(), isNotNull);
+      expect(di.locator<TVLocalDataSource>(), isNotNull);
     });
   });
 }

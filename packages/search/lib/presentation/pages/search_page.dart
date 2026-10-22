@@ -9,9 +9,8 @@ import '../bloc/movie_search/movie_search_state.dart';
 
 class SearchPage extends StatelessWidget {
   static const routeName = searchMovieRoute;
-  static const ROUTE_NAME = routeName;
 
-  const SearchPage({Key? key}) : super(key: key);
+  const SearchPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +59,7 @@ class SearchPage extends StatelessWidget {
                     child: Text(state.message),
                   );
                 } else {
-                  return Expanded(child: Container());
+                  return const Expanded(child: SizedBox());
                 }
               },
             ),

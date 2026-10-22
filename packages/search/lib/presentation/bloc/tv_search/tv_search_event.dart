@@ -1,17 +1,20 @@
 import 'package:equatable/equatable.dart';
 
-abstract class TvSearchEvent extends Equatable {
-  const TvSearchEvent();
+abstract class TVSearchEvent extends Equatable {
+  const TVSearchEvent();
 
   @override
   List<Object?> get props => [];
 }
 
-class OnTvQueryChanged extends TvSearchEvent {
+class OnTVQueryChanged extends TVSearchEvent {
   final String query;
 
-  const OnTvQueryChanged(this.query);
+  const OnTVQueryChanged(this.query);
 
   @override
   List<Object?> get props => [query];
 }
+
+typedef TvSearchEvent = TVSearchEvent;
+typedef OnTvQueryChanged = OnTVQueryChanged;
